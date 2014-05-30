@@ -16,7 +16,6 @@ namespace Ifp.Validation
     {
         ValidationOutcome ValidateObject(T objectToValidate);
         bool CausesValidationProcessToStop { get; }
-
     }
 
     public abstract class ValidationRule<T> : IValidationRule<T>
