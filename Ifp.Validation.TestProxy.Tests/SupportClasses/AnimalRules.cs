@@ -10,9 +10,7 @@ namespace Ifp.Validation.TestProxy.Tests.SupportClasses
     {
         public override ValidationOutcome ValidateObject(Animal objectToValidate)
         {
-            if (objectToValidate is Dog)
-                return "Can bite".ToFailure(FailureSeverity.Error);
-            return ValidationOutcome.Success;
+            return "This is an error message.".ToFailure(FailureSeverity.Error);
         }
     }
 }
