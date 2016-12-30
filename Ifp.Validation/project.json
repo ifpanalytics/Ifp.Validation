@@ -1,0 +1,56 @@
+﻿{
+  "copyright": "2017",
+  "title": "Ifp.Validation",
+  "description": "Library for defining validation rules, combine them to sets of rules and test objects against that rules.",
+  "version": "1.0.0-*",
+  "authors": [ "Martin Strecker" ],
+  "name": "Ifp.Validation",
+  "packOptions": {
+    "requireLicenseAcceptance": false,
+    "owners": [ "Martin Strecker" ],
+    "summary": "Ifp.Validation validates an object against an set of validation rules.",
+    "licenseUrl": "https://opensource.org/licenses/MIT",
+    "tags": [ "pattern", "match", "matching", "type", "case", "functional", "ML" ],
+    "iconUrl": "https://cdn1.iconfinder.com/data/icons/material-core/20/check-circle-outline-32.png",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/ifpanalytics/Ifp.Validation"
+    }
+  },
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "outputName": "Ifp.Validation"
+  },
+
+  "frameworks": {
+    "netstandard1.0": {
+      "dependencies": {
+        "System.Linq": "4.1.0",
+        "System.Runtime": "4.1.0"
+      }
+    },
+    "net45": {
+      "frameworkAssemblies": {
+      }
+    },
+    "net40": {
+      "frameworkAssemblies": {
+      }
+    },
+    "net35": {
+      "frameworkAssemblies": {
+      }
+    },
+    ".NETPortable,Version=v4.5,Profile=Profile259": {
+      "frameworkAssemblies": {
+        "mscorlib": "",
+        "System": "",
+        "System.Core": "",
+        "System.Runtime": "",
+        "System.Runtime.Extensions": "",
+        "System.Collections": "",
+        "System.Linq": ""
+      }
+    }
+  }
+}

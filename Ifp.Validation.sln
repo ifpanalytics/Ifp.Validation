@@ -1,28 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ifp.Validation", "Ifp.Validation.csproj", "{C9C71BF1-3D9D-4CAE-B33E-F8BA241D1C1D}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Ifp.Validation", "Ifp.Validation\Ifp.Validation.xproj", "{6A10958B-FE52-45BE-9651-14B9419D2D20}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://ifp.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Ifp.Validation.csproj
-		SccLocalPath1 = .
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C9C71BF1-3D9D-4CAE-B33E-F8BA241D1C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9C71BF1-3D9D-4CAE-B33E-F8BA241D1C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9C71BF1-3D9D-4CAE-B33E-F8BA241D1C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9C71BF1-3D9D-4CAE-B33E-F8BA241D1C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A10958B-FE52-45BE-9651-14B9419D2D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A10958B-FE52-45BE-9651-14B9419D2D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A10958B-FE52-45BE-9651-14B9419D2D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A10958B-FE52-45BE-9651-14B9419D2D20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

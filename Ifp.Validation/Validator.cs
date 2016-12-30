@@ -23,13 +23,11 @@ namespace Ifp.Validation
 
         public abstract ValidationOutcome ValidateObject(T objectToValidate);
 
-        public virtual bool CausesValidationProcessToStop { get { return false; } }
+        public virtual bool CausesValidationProcessToStop => false;
     }
 
     public class ValidationRuleDelegate<T> : IValidationRule<T>
     {
-        readonly ValidationFunction<T> _ValidationFunction;
-        readonly bool _CausesValidationProcessToStop;
 
         public ValidationRuleDelegate(ValidationFunction<T> validationFunction)
             : this(validationFunction, false)
@@ -37,43 +35,27 @@ namespace Ifp.Validation
         }
         public ValidationRuleDelegate(ValidationFunction<T> validationFunction, bool causesValidationProcessToStop)
         {
-            _ValidationFunction = validationFunction;
-            _CausesValidationProcessToStop = causesValidationProcessToStop;
+            ValidationFunction = validationFunction;
+            CausesValidationProcessToStop = causesValidationProcessToStop;
         }
 
-        protected ValidationFunction<T> ValidationFunction
-        {
-            get { return _ValidationFunction; }
-        }
+        protected ValidationFunction<T> ValidationFunction { get; }
 
-        public ValidationOutcome ValidateObject(T objectToValidate)
-        {
-            return ValidationFunction(objectToValidate);
-        }
+        public ValidationOutcome ValidateObject(T objectToValidate) => ValidationFunction(objectToValidate);
 
-        public bool CausesValidationProcessToStop
-        {
-            get
-            {
-                return _CausesValidationProcessToStop;
-            }
-        }
+        public bool CausesValidationProcessToStop { get; }
     }
 
     public class RuleBasedValidator<T> : Validator<T>
     {
-        readonly IValidationRule<T>[] _Rules;
 
         public RuleBasedValidator(IEnumerable<IValidationRule<T>> rules) : this(rules.ToArray()) { }
         public RuleBasedValidator(params IValidationRule<T>[] rules)
         {
-            _Rules = rules;
+            Rules = rules;
         }
 
-        protected IValidationRule<T>[] Rules
-        {
-            get { return _Rules; }
-        }
+        protected IValidationRule<T>[] Rules { get; }
 
         protected virtual IEnumerable<ValidationOutcome> ProcessValidations(T objectToValidate)
         {
@@ -86,9 +68,6 @@ namespace Ifp.Validation
             }
         }
 
-        public override ValidationSummary Validate(T objectToValidate)
-        {
-            return new ValidationSummary(ProcessValidations(objectToValidate));
-        }
+        public override ValidationSummary Validate(T objectToValidate) => new ValidationSummary(ProcessValidations(objectToValidate));
     }
 }

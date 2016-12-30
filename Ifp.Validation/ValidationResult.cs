@@ -14,50 +14,47 @@ namespace Ifp.Validation
 
         public abstract bool CausesCancel { get; }
         public abstract bool AllowsCancel { get; }
-        public virtual bool IsAnError { get { return true; } }
-        public static SuccessSeverity Success { get { return _Success; } }
-        public static InformationSeverity Information { get { return _Information; } }
-        public static WarningSeverity Warning { get { return _Warning; } }
-        public static ErrorSeverity Error { get { return _Error; } }
+        public virtual bool IsAnError => true;
+        public static SuccessSeverity Success => _Success;
+        public static InformationSeverity Information => _Information;
+        public static WarningSeverity Warning => _Warning;
+        public static ErrorSeverity Error => _Error;
 
         public sealed class SuccessSeverity : ValidationSeverity
         {
-            public override bool AllowsCancel { get { return false; } }
-            public override bool CausesCancel { get { return false; } }
-            public override bool IsAnError { get { return false; } }
-            protected override int SeverityAsNumber { get { return 0; } }
+            public override bool AllowsCancel => false;
+            public override bool CausesCancel => false;
+            public override bool IsAnError => false;
+            protected override int SeverityAsNumber => 0;
         }
         public class InformationSeverity : ValidationSeverity
         {
-            public override bool AllowsCancel { get { return false; } }
-            public override bool CausesCancel { get { return false; } }
-            protected override int SeverityAsNumber { get { return 10; } }
+            public override bool AllowsCancel => false;
+            public override bool CausesCancel => false;
+            protected override int SeverityAsNumber => 10;
         }
         public class WarningSeverity : ValidationSeverity
         {
-            public override bool AllowsCancel { get { return true; } }
-            public override bool CausesCancel { get { return false; } }
-            protected override int SeverityAsNumber { get { return 20; } }
+            public override bool AllowsCancel => true;
+            public override bool CausesCancel => false;
+            protected override int SeverityAsNumber => 20;
         }
         public class ErrorSeverity : ValidationSeverity
         {
-            public override bool AllowsCancel { get { return true; } }
-            public override bool CausesCancel { get { return true; } }
-            protected override int SeverityAsNumber { get { return 30; } }
+            public override bool AllowsCancel => true;
+            public override bool CausesCancel => true;
+            protected override int SeverityAsNumber => 30;
         }
 
         protected abstract int SeverityAsNumber { get; }
 
-        public virtual int CompareTo(ValidationSeverity other)
-        {
-            return this.SeverityAsNumber.CompareTo(other.SeverityAsNumber);
-        }
+        public virtual int CompareTo(ValidationSeverity other) => this.SeverityAsNumber.CompareTo(other.SeverityAsNumber);
     }
 
     public abstract class ValidationOutcome
     {
         readonly static ValidationOutcomeSuccess _ValidationOutcomeSuccess = new ValidationOutcomeSuccess();
-        public static ValidationOutcome Success { get { return _ValidationOutcomeSuccess; } }
+        public static ValidationOutcome Success => _ValidationOutcomeSuccess;
         public abstract ValidationSeverity Severity { get; }
 
         static Func<string, ValidationOutcome> FailureSeverityToValidationOutcome(FailureSeverity severity)
@@ -85,53 +82,38 @@ namespace Ifp.Validation
 
     internal sealed class ValidationOutcomeSuccess : ValidationOutcome
     {
-        public override ValidationSeverity Severity
-        {
-            get { return ValidationSeverity.Success; }
-        }
+        public override ValidationSeverity Severity => ValidationSeverity.Success;
     }
     public abstract class ValidationOutcomeWithMessage : ValidationOutcome
     {
-        readonly string _Message;
         public ValidationOutcomeWithMessage(string message)
         {
-            _Message = message;
+            ErrorMessage = message;
         }
-        public string ErrorMessage { get { return _Message; } }
+        public string ErrorMessage { get; }
     }
 
     internal class ValidationOutcomeInformation : ValidationOutcomeWithMessage
     {
         public ValidationOutcomeInformation(string message) : base(message) { }
-        public override ValidationSeverity Severity
-        {
-            get { return ValidationSeverity.Information; }
-        }
+        public override ValidationSeverity Severity => ValidationSeverity.Information;
     }
 
     internal class ValidationOutcomeWarning : ValidationOutcomeWithMessage
     {
         public ValidationOutcomeWarning(string message) : base(message) { }
-        public override ValidationSeverity Severity
-        {
-            get { return ValidationSeverity.Warning; }
-        }
+        public override ValidationSeverity Severity => ValidationSeverity.Warning;
     }
 
     internal class ValidationOutcomeError : ValidationOutcomeWithMessage
     {
         public ValidationOutcomeError(string message) : base(message) { }
-        public override ValidationSeverity Severity
-        {
-            get { return ValidationSeverity.Error; }
-        }
+        public override ValidationSeverity Severity => ValidationSeverity.Error;
     }
 
     public class ValidationSummary
     {
         readonly ValidationOutcome[] _ValidationOutcomes;
-
-        readonly ValidationSeverity _Severity;
 
         public ValidationSummary() : this(new ValidationOutcome[] { }) { }
 
@@ -144,26 +126,14 @@ namespace Ifp.Validation
         public ValidationSummary(params ValidationOutcome[] validationOutcomes)
         {
             _ValidationOutcomes = validationOutcomes.OrderByDescending(v => v.Severity).ToArray();
-            _Severity = _ValidationOutcomes.Max(vr => vr.Severity) ?? ValidationSeverity.Success;
+            Severity = _ValidationOutcomes.Max(vr => vr.Severity) ?? ValidationSeverity.Success;
         }
 
-        public IEnumerable<ValidationOutcomeWithMessage> ValidationFailures
-        {
-            get { return _ValidationOutcomes.OfType<ValidationOutcomeWithMessage>().Where(vr => vr.Severity.IsAnError); }
-        }
+        public IEnumerable<ValidationOutcomeWithMessage> ValidationFailures => _ValidationOutcomes.OfType<ValidationOutcomeWithMessage>().Where(vr => vr.Severity.IsAnError);
 
-        public IEnumerable<ValidationOutcome> ValidationOutcomes
-        {
-            get { return _ValidationOutcomes; }
-        }
+        public IEnumerable<ValidationOutcome> ValidationOutcomes => _ValidationOutcomes;
 
-        public ValidationSeverity Severity
-        {
-            get
-            {
-                return _Severity;
-            }
-        }
+        public ValidationSeverity Severity { get; }
     }
 
     public enum FailureSeverity
@@ -175,17 +145,13 @@ namespace Ifp.Validation
 
     public class ValidationSummaryBuilder
     {
-        readonly List<ValidationOutcome> _ValidationOutcomes;
 
         public ValidationSummaryBuilder()
         {
-            _ValidationOutcomes = new List<ValidationOutcome>();
+            ValidationOutcomes = new List<ValidationOutcome>();
         }
 
-        protected List<ValidationOutcome> ValidationOutcomes
-        {
-            get { return _ValidationOutcomes; }
-        }
+        protected List<ValidationOutcome> ValidationOutcomes { get; }
 
         public ValidationSummaryBuilder Append(ValidationOutcome ValidationOutcome)
         {
@@ -201,27 +167,18 @@ namespace Ifp.Validation
             return this;
         }
 
-        public ValidationSummary ToSummary()
-        {
-            return new ValidationSummary(ValidationOutcomes);
-        }
+        public ValidationSummary ToSummary() => new ValidationSummary(ValidationOutcomes);
     }
 
     public static class ValidationSummaryBuilderExtensions
     {
-        public static ValidationSummary ToSummary(this ValidationOutcome validationOutcome)
-        {
-            return new ValidationSummary(validationOutcome);
-        }
+        public static ValidationSummary ToSummary(this ValidationOutcome validationOutcome) => new ValidationSummary(validationOutcome);
         public static ValidationSummaryBuilder ToSummaryBuilder(this ValidationOutcome validationOutcome)
         {
             var res = new ValidationSummaryBuilder();
             res.Append(validationOutcome);
             return res;
         }
-        public static ValidationOutcome ToFailure(this string message, FailureSeverity severity)
-        {
-            return ValidationOutcome.Failure(severity, message);
-        }
+        public static ValidationOutcome ToFailure(this string message, FailureSeverity severity) => ValidationOutcome.Failure(severity, message);
     }
 }
