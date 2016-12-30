@@ -111,74 +111,25 @@ namespace Ifp.Validation
         public override ValidationSeverity Severity => ValidationSeverity.Error;
     }
 
-    public class ValidationSummary
-    {
-        readonly ValidationOutcome[] _ValidationOutcomes;
 
-        public ValidationSummary() : this(new ValidationOutcome[] { }) { }
-
-        public ValidationSummary(IEnumerable<ValidationSummary> validationSummaries) : this(validationSummaries.ToArray()) { }
-
-        public ValidationSummary(params ValidationSummary[] validationSummaries) : this(validationSummaries.SelectMany(s => s.ValidationOutcomes)) { }
-
-        public ValidationSummary(IEnumerable<ValidationOutcome> validationOutcomes) : this(validationOutcomes.ToArray()) { }
-
-        public ValidationSummary(params ValidationOutcome[] validationOutcomes)
-        {
-            _ValidationOutcomes = validationOutcomes.OrderByDescending(v => v.Severity).ToArray();
-            Severity = _ValidationOutcomes.Max(vr => vr.Severity) ?? ValidationSeverity.Success;
-        }
-
-        public IEnumerable<ValidationOutcomeWithMessage> ValidationFailures => _ValidationOutcomes.OfType<ValidationOutcomeWithMessage>().Where(vr => vr.Severity.IsAnError);
-
-        public IEnumerable<ValidationOutcome> ValidationOutcomes => _ValidationOutcomes;
-
-        public ValidationSeverity Severity { get; }
-    }
-
+    /// <summary>
+    /// enumeration of predefined failure severities.
+    /// </summary>
     public enum FailureSeverity
     {
+        /// <summary>
+        /// Failure severity 'information' indicates that there is a minor rule violation. This violation might be shown to the user but should never prevent the user from proceeding. 
+        /// </summary>
         Information,
+
+        /// <summary>
+        /// Failure severity 'warning' indicates a rule violation that the user must confirm. An user should be able to proceed after he confirmed that he read the warning.
+        /// </summary>
         Warning,
+
+        /// <summary>
+        /// Failure severity 'error' indicates a rule violation that the user must confirm. An user should not be able to proceed.
+        /// </summary>
         Error,
-    }
-
-    public class ValidationSummaryBuilder
-    {
-
-        public ValidationSummaryBuilder()
-        {
-            ValidationOutcomes = new List<ValidationOutcome>();
-        }
-
-        protected List<ValidationOutcome> ValidationOutcomes { get; }
-
-        public ValidationSummaryBuilder Append(ValidationOutcome ValidationOutcome)
-        {
-            ValidationOutcomes.Add(ValidationOutcome);
-            return this;
-        }
-
-
-        public ValidationSummaryBuilder Append(FailureSeverity severity, string message)
-        {
-            var validationResult = ValidationOutcome.Failure(severity, message);
-            this.Append(validationResult);
-            return this;
-        }
-
-        public ValidationSummary ToSummary() => new ValidationSummary(ValidationOutcomes);
-    }
-
-    public static class ValidationSummaryBuilderExtensions
-    {
-        public static ValidationSummary ToSummary(this ValidationOutcome validationOutcome) => new ValidationSummary(validationOutcome);
-        public static ValidationSummaryBuilder ToSummaryBuilder(this ValidationOutcome validationOutcome)
-        {
-            var res = new ValidationSummaryBuilder();
-            res.Append(validationOutcome);
-            return res;
-        }
-        public static ValidationOutcome ToFailure(this string message, FailureSeverity severity) => ValidationOutcome.Failure(severity, message);
     }
 }

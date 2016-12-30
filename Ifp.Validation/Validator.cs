@@ -12,44 +12,23 @@ namespace Ifp.Validation
         public abstract ValidationSummary Validate(T objectToValidate);
     }
 
-    public interface IValidationRule<in T>
-    {
-        ValidationOutcome ValidateObject(T objectToValidate);
-        bool CausesValidationProcessToStop { get; }
-    }
-
-    public abstract class ValidationRule<T> : IValidationRule<T>
-    {
-
-        public abstract ValidationOutcome ValidateObject(T objectToValidate);
-
-        public virtual bool CausesValidationProcessToStop => false;
-    }
-
-    public class ValidationRuleDelegate<T> : IValidationRule<T>
-    {
-
-        public ValidationRuleDelegate(ValidationFunction<T> validationFunction)
-            : this(validationFunction, false)
-        {
-        }
-        public ValidationRuleDelegate(ValidationFunction<T> validationFunction, bool causesValidationProcessToStop)
-        {
-            ValidationFunction = validationFunction;
-            CausesValidationProcessToStop = causesValidationProcessToStop;
-        }
-
-        protected ValidationFunction<T> ValidationFunction { get; }
-
-        public ValidationOutcome ValidateObject(T objectToValidate) => ValidationFunction(objectToValidate);
-
-        public bool CausesValidationProcessToStop { get; }
-    }
-
+    /// <summary>
+    /// A validator that takes a set of objects that implement the <see cref="IValidationRule{T}"/> intereface.
+    /// Use the <see cref="ValidationRule{T}"/> class or the <see cref="ValidationRuleDelegate{T}"/> class as base for the implementation of rules.
+    /// </summary>
+    /// <typeparam name="T">The type of the object to validate</typeparam>
     public class RuleBasedValidator<T> : Validator<T>
     {
-
+        /// <summary>
+        /// Constructs a validator that applies the given validation rules to an object in the given order.
+        /// </summary>
+        /// <param name="rules">The <see cref="IValidationRule{T}"/>s to apply to an object.</param>
         public RuleBasedValidator(IEnumerable<IValidationRule<T>> rules) : this(rules.ToArray()) { }
+
+        /// <summary>
+        /// Constructs a validator that applies the given validation rules to an object in the given order.
+        /// </summary>
+        /// <param name="rules">The <see cref="IValidationRule{T}"/>s to apply to an object.</param>
         public RuleBasedValidator(params IValidationRule<T>[] rules)
         {
             Rules = rules;
@@ -68,6 +47,11 @@ namespace Ifp.Validation
             }
         }
 
+        /// <summary>
+        /// Validates an object by applying the rules given in the constructor <see cref="RuleBasedValidator{T}"/> to the object in the order specified in the constructor./> 
+        /// </summary>
+        /// <param name="objectToValidate">The object to validate.</param>
+        /// <returns>A <see cref="ValidationSummary"/> that contains the <see cref="ValidationOutcome"/> of every applied <see cref="IValidationRule{T}"/>.</returns>
         public override ValidationSummary Validate(T objectToValidate) => new ValidationSummary(ProcessValidations(objectToValidate));
     }
 }

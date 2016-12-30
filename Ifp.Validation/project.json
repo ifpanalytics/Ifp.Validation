@@ -1,4 +1,4 @@
-﻿{
+{
   "copyright": "2017",
   "title": "Ifp.Validation",
   "description": "Library for defining validation rules, combine them to sets of rules and test objects against that rules.",
@@ -19,7 +19,8 @@
   },
   "buildOptions": {
     "warningsAsErrors": true,
-    "outputName": "Ifp.Validation"
+    "outputName": "Ifp.Validation",
+    "xmlDoc": false
   },
 
   "frameworks": {
