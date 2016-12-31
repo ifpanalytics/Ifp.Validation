@@ -6,7 +6,7 @@ namespace Ifp.Validation
 {
     /// <summary>
     /// A container for one or more <see cref="ValidationOutcome"/> objects.
-    /// The <see cref="ValidationSummary"/> is usally produced by a <see cref="RuleBasedValidator{T}"/>.
+    /// The <see cref="ValidationSummary"/> is usually produced by a <see cref="RuleBasedValidator{T}"/>.
     /// </summary>
     /// <seealso cref="ValidationSummaryBuilder"/>
     /// <seealso cref="ValidationSummaryBuilderExtensions.ToSummary"/>

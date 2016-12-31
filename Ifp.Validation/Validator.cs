@@ -6,7 +6,7 @@ using System.Text;
 namespace Ifp.Validation
 {
     /// <summary>
-    /// Base class for validators. Those validators usally don't perform validations on there own 
+    /// Base class for validators. Those validators usually don't perform validations on there own 
     /// but delegate the validation to one or more <see cref="IValidationRule{T}"/> objects. These <see cref="IValidationRule{T}"/> objects perform a single
     /// isolated validation and the <see cref="Validator{T}"/> collects the single <see cref="ValidationOutcome"/> and wrap them in a <see cref="ValidationSummary"/>.
     /// </summary>
@@ -46,7 +46,7 @@ namespace Ifp.Validation
         }
 
         /// <summary>
-        /// The rules passed in the contructor.
+        /// The rules passed in the constructor.
         /// </summary>
         protected IValidationRule<T>[] Rules { get; }
 
