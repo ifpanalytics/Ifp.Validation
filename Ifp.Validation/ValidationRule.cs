@@ -25,7 +25,7 @@ namespace Ifp.Validation
 
         /// <summary>
         /// Returns true if the <see cref="RuleBasedValidator{T}"/> should not proceed validation tests in case the validation returns a <see cref="ValidationOutcome"/> with <see cref="ValidationSeverity.IsAnError"/>. 
-        /// This is useful to prevent further processing of rules in cases where all the following rules will also fail. A typical use case is a check for <code>objectToValidate == null</code>.
+        /// This is useful to prevent further processing of rules in cases where all the following rules will also fail. A typical use case is a check for <c>objectToValidate == null</c>.
         /// </summary>
         bool CausesValidationProcessToStop { get; }
     }
@@ -45,17 +45,20 @@ namespace Ifp.Validation
         /// You can use the <see cref="ValidationSummaryBuilderExtensions.ToFailure(string, FailureSeverity)"/> extension method to construct a <see cref="ValidationOutcome"/>. 
         /// </remarks>
         /// <example>
+        /// <code language="cs">
+        /// Return a <see cref="ValidationOutcome"/> using the extension method <see cref="ValidationSummaryBuilderExtensions.ToFailure(string, FailureSeverity)"/>.
         /// public override ValidationOutcome ValidateObject(Animal objectToValidate)
         /// {
         ///     return "This is an error message.".ToFailure(FailureSeverity.Error);
         /// }
+        /// </code>
         /// </example>
         public abstract ValidationOutcome ValidateObject(T objectToValidate);
 
         /// <summary>
         /// Returns always false. Override this property and return true if
         /// the <see cref="RuleBasedValidator{T}"/> should not proceed validation tests in case this validation rule returns a <see cref="ValidationOutcome"/> with <see cref="ValidationSeverity.IsAnError"/>. 
-        /// This is useful to prevent further processing of rules in cases where all the following rules will also fail. A typical use case is a check for <code>objectToValidate == null</code>.
+        /// This is useful to prevent further processing of rules in cases where all the following rules will also fail. A typical use case is a check for <c>objectToValidate == null</c>.
         /// </summary>
         public virtual bool CausesValidationProcessToStop => false;
     }
@@ -81,7 +84,7 @@ namespace Ifp.Validation
         /// </summary>
         /// <param name="validationFunction">The <see cref="ValidationFunction{T}"/> delegate, that implements the validation logic.</param>
         /// <remarks>
-        /// The <see cref="IValidationRule{T}.CausesValidationProcessToStop"/> property is <code>false</code>.
+        /// The <see cref="IValidationRule{T}.CausesValidationProcessToStop"/> property is <c>false</c>.
         /// </remarks>
         public ValidationRuleDelegate(ValidationFunction<T> validationFunction)
             : this(validationFunction, false)
@@ -92,7 +95,7 @@ namespace Ifp.Validation
         /// Constructs a new <see cref="ValidationRuleDelegate{T}"/> object and takes a <see cref="ValidationFunction{T}"/> delegate that does the validation.
         /// </summary>
         /// <param name="validationFunction">The <see cref="ValidationFunction{T}"/> delegate, that implements the validation logic.</param>
-        /// <param name="causesValidationProcessToStop">Pass <code>true</code> to prevent the <see cref="RuleBasedValidator{T}"/> to proceed with more <see cref="IValidationRule{T}"/>.</param>
+        /// <param name="causesValidationProcessToStop">Pass <c>true</c> to prevent the <see cref="RuleBasedValidator{T}"/> to proceed with more <see cref="IValidationRule{T}"/>.</param>
         public ValidationRuleDelegate(ValidationFunction<T> validationFunction, bool causesValidationProcessToStop)
         {
             ValidationFunction = validationFunction;
@@ -114,7 +117,7 @@ namespace Ifp.Validation
         /// <summary>
         /// Use the constructor <see cref="ValidationRuleDelegate(ValidationFunction{T}, bool)"/> to configure this property.
         /// Return true if the <see cref="RuleBasedValidator{T}"/> should not proceed validation tests in case this validation rule returns a <see cref="ValidationOutcome"/> with <see cref="ValidationSeverity.IsAnError"/>. 
-        /// This is useful to prevent further processing of rules in cases where all the following rules will also fail. A typical use case is a check for <code>objectToValidate == null</code>.
+        /// This is useful to prevent further processing of rules in cases where all the following rules will also fail. A typical use case is a check for <c>objectToValidate == null</c>.
         /// </summary>
         public bool CausesValidationProcessToStop { get; }
     }

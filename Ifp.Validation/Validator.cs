@@ -53,7 +53,7 @@ namespace Ifp.Validation
         /// <summary>
         /// Processes the <see cref="Rules"/> one after the other and stops if a rule returns a 
         /// <see cref="ValidationOutcome"/> with <see cref="ValidationSeverity.IsAnError"/> and 
-        /// <see cref="IValidationRule{T}.CausesValidationProcessToStop"/> both set to <code>true</code>.
+        /// <see cref="IValidationRule{T}.CausesValidationProcessToStop"/> both set to <c>true</c>.
         /// </summary>
         /// <param name="objectToValidate">The object to validate.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> of <see cref="ValidationOutcome"/>.</returns>
