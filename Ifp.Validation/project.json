@@ -10,8 +10,9 @@
     "owners": [ "Martin Strecker" ],
     "summary": "Ifp.Validation validates an object against an set of validation rules.",
     "licenseUrl": "https://opensource.org/licenses/MIT",
-    "tags": [ "pattern", "match", "matching", "type", "case", "functional", "ML" ],
+    "tags": [ "validation", "valid", "input", "dependency injection", "testable", "extensible" ],
     "iconUrl": "https://cdn1.iconfinder.com/data/icons/material-core/20/check-circle-outline-32.png",
+    "projectUrl": "https://github.com/ifpanalytics/Ifp.Validation",
     "repository": {
       "type": "git",
       "url": "https://github.com/ifpanalytics/Ifp.Validation"
@@ -20,7 +21,7 @@
   "buildOptions": {
     "warningsAsErrors": true,
     "outputName": "Ifp.Validation",
-    "xmlDoc": false
+    "xmlDoc": true
   },
 
   "frameworks": {
