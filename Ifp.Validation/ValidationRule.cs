@@ -45,8 +45,7 @@ namespace Ifp.Validation
         /// You can use the <see cref="ValidationSummaryBuilderExtensions.ToFailure(string, FailureSeverity)"/> extension method to construct a <see cref="ValidationOutcome"/>. 
         /// </remarks>
         /// <example>
-        /// Indicate success by returning <see cref="ValidationOutcome.Success"/>.
-        /// 
+        /// <para>Indicate success by returning <see cref="ValidationOutcome.Success"/>.</para>
         /// <code language="cs">
         /// public override ValidationOutcome ValidateObject(Animal objectToValidate)
         /// {
@@ -54,8 +53,7 @@ namespace Ifp.Validation
         /// }
         /// </code>
         /// 
-        /// Return a <see cref="ValidationOutcome"/> by using the <see cref="ValidationOutcome.Failure(FailureSeverity, string)"/> method.
-        /// 
+        /// <para>Return a <see cref="ValidationOutcome"/> by using the <see cref="ValidationOutcome.Failure(FailureSeverity, string)"/> method.</para>
         /// <code language="cs">
         /// public override ValidationOutcome ValidateObject(Animal objectToValidate)
         /// {
@@ -63,9 +61,8 @@ namespace Ifp.Validation
         /// }
         /// </code>
         /// 
-        /// Return a <see cref="ValidationOutcome"/> using the <see cref="string"/> extension method 
-        /// <see cref="ValidationSummaryBuilderExtensions.ToFailure(string, FailureSeverity)"/>.
-        /// 
+        /// <para>Return a <see cref="ValidationOutcome"/> using the <see cref="string"/> extension method 
+        /// <see cref="ValidationSummaryBuilderExtensions.ToFailure(string, FailureSeverity)"/>.</para> 
         /// <code language="cs">
         /// public override ValidationOutcome ValidateObject(Animal objectToValidate)
         /// {
