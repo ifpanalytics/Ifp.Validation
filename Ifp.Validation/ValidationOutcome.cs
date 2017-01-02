@@ -44,7 +44,7 @@ namespace Ifp.Validation
         /// </summary>
         /// <param name="severity">One of the predefined <see cref="FailureSeverity"/> values.</param>
         /// <param name="message">A message, describing the failure.</param>
-        /// <returns></returns>
+        /// <returns>Returns a <see cref="ValidationOutcome"/> that corresponds to the <paramref name="severity"/>.</returns>
         public static ValidationOutcome Failure(FailureSeverity severity, string message)
         {
             var validationOutcomeFunc = FailureSeverityToValidationOutcome(severity);
@@ -66,7 +66,7 @@ namespace Ifp.Validation
         /// <summary>
         /// Constructor taking the <see cref="ErrorMessage"/>.
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">The error message.</param>
         public ValidationOutcomeWithMessage(string message)
         {
             ErrorMessage = message;

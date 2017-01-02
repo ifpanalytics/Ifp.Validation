@@ -33,7 +33,7 @@ namespace Ifp.Validation
         /// </summary>
         /// <param name="message">The message to append to a <see cref="ValidationOutcomeWithMessage"/>.</param>
         /// <param name="severity">The <see cref="FailureSeverity"/> that is used to construct one of the predefined <see cref="ValidationOutcome"/>.</param>
-        /// <returns></returns>
+        /// <returns>Returns a <see cref="ValidationOutcome"/> that corresponds to the <paramref name="severity"/>.</returns>
         public static ValidationOutcome ToFailure(this string message, FailureSeverity severity) => ValidationOutcome.Failure(severity, message);
     }
 }

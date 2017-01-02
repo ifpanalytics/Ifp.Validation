@@ -120,7 +120,7 @@ namespace Ifp.Validation
         /// <summary>
         /// Returns the <see cref="ValidationSummary"/> out of the appended <see cref="ValidationOutcome"/> objects. 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The builder itself.</returns>
         public ValidationSummary ToSummary() => new ValidationSummary(ValidationOutcomes);
     }
 }
