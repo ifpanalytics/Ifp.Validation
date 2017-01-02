@@ -10,6 +10,7 @@ namespace Ifp.Validation.TestProxy.Tests.SupportClasses
     {
         public override ValidationOutcome ValidateObject(Animal objectToValidate)
         {
+            return ValidationOutcome.Failure(FailureSeverity.Error, "Error message");
             return "This is an error message.".ToFailure(FailureSeverity.Error);
         }
     }
