@@ -23,10 +23,7 @@ namespace Ifp.Validation.TestProxy.Tests.SupportClasses
             _CausesValidationProcessToStop = causesValidationProcessToStop;
         }
 
-        public override bool CausesValidationProcessToStop
-        {
-            get { return _CausesValidationProcessToStop; }
-        }
+        public override bool CausesValidationProcessToStop => _CausesValidationProcessToStop;
         public ValidationOutcome Outcome { get; }
         public Action OnValidateObjectCalled { get; }
 

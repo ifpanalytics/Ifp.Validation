@@ -8,9 +8,6 @@ namespace Ifp.Validation.TestProxy.Tests.SupportClasses
 {
     public class AnimalShouldNotBiteRule : ValidationRule<Animal>
     {
-        public override ValidationOutcome ValidateObject(Animal objectToValidate)
-        {
-            return "This is an error message.".ToFailure(FailureSeverity.Error);
-        }
+        public override ValidationOutcome ValidateObject(Animal objectToValidate) => "This is an error message.".ToFailure(FailureSeverity.Error);
     }
 }
