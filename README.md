@@ -9,6 +9,11 @@ rules and encapsulating the validation result in an easily presentable form:
 
 The library was created with the following design goals:
 <dl>
+    <dt>Clear focus</dt>
+    <dd>
+        Provide a library that can validate an object and be able to present the result of several validation rules at once
+        by also providing a notion of validation rule violation severity.
+    </dd>
     <dt><a href="https://en.wikipedia.org/wiki/Separation_of_concerns">Separation of concerns</a></dt>
     <dd>
         The libraray separates the <em>object to validate</em> from the validation logic. 
@@ -39,7 +44,8 @@ The library was created with the following design goals:
             <dd>
                 A service that takes a <em>ValidationSummary</em> and presents it to the user (see screenshot above).
             </dd>
-        </dl>
+        </dl>        
+        This leads to great flexibility and a good testability of the validation rules.
     </dd>
     <dt><a href="https://de.wikipedia.org/wiki/Dependency_Injection">Dependency injection</a></dt>
     <dd>
