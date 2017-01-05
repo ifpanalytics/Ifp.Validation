@@ -154,4 +154,16 @@ public class RegisterNewUserService: IRegisterNewUserService
 }
 ```
 
+To construct a new `RegisterNewUserService` all the services need to be resolved:
+
+```CS
+new RegisterNewUserService(new RegisterNewUserValidator(new PasswordValidationRule(new PasswordPolicyVerifier()), new BirthdateValidationRule()), new ValidationSummaryPresentationService()); 
+```
+
+This cumbersome work is best delegated to a dependency injection framework like [Ninject](http://www.ninject.org/) or [Unity](https://github.com/unitycontainer/unity).
+
+## Understanding `ValidationOutcome`
+
+## Reusing `ValidationRule`
+
 ## How to get

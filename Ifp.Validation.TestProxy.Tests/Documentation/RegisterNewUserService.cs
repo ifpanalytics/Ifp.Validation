@@ -32,5 +32,32 @@ namespace Ifp.Validation.TestProxy.Tests.Documentation
             // Logic to store the model to the database.
             return true;
         }
+        public static IRegisterNewUserService TestFactoryMethod()
+        {
+            return new RegisterNewUserService(new RegisterNewUserValidator(new PasswordValidationRule(new PasswordPolicyVerifier()), new BirthdateValidationRule()), new ValidationSummaryPresentationService());
+        }
+    }
+
+    internal class ValidationSummaryPresentationService : IValidationSummaryPresentationService
+    {
+        public bool ShowValidationSummary(ValidationSummary validationSummary)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ShowValidationSummary(ValidationSummary validationSummary, bool showOnlyOnFailures)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ShowValidationSummary(ValidationSummary validationSummary, bool showOnlyOnFailures, string headerText)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ShowValidationSummary(ValidationSummary validationSummary, bool showOnlyOnFailures, string headerText, string howToProceedMessage)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
