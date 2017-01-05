@@ -54,6 +54,15 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CollectionValidatorTests.cs" />
+    <Compile Include="Documentation\BirthdateValidationRule.cs" />
+    <Compile Include="Documentation\RegisterNewUserService.cs" />
+    <Compile Include="Documentation\EMailValidationRule.cs" />
+    <Compile Include="Documentation\IPasswordPolicyVerifier.cs" />
+    <Compile Include="Documentation\IRegisteredUserRepository.cs" />
+    <Compile Include="Documentation\IValidateEmailAdressesAccordingRFC5322.cs" />
+    <Compile Include="Documentation\PasswordValidationRule.cs" />
+    <Compile Include="Documentation\RegisterNewUserModel.cs" />
+    <Compile Include="Documentation\RegisterNewUserValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RuleBasedValidatorTests.cs" />
     <Compile Include="SupportClasses\AnimalRules.cs" />

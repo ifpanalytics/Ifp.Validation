@@ -47,13 +47,111 @@ The library was created with the following design goals:
         The dependencies are expressed by constructor parameters (see the examples below).
     </dd>
     <dt>Reuse and combinability of validation rules</dt>
-    <dd>fff</dd>
+    <dd>
+        Validation rules can easily be combined and reused even if the type of the object to validate
+        is not of the type that the validation rule demands (see below for examples).
+    </dd>
     <dt>Extensibility</dt>
-    <dd>fff</dd>
-
+    <dd>
+        All validation steps can be used as entry points for own implementations and extensions.        
+    </dd>
 </dl>
+
+The following parts are not included in the library:
+
+* No predefined validation rules, like *mandatory field*, *email address*, *Max length* and alike.
+* No presentation logic. A WPF library with an `IValidationSummaryPresentationService` can
+  be found at [github.com/ifpanalytics/Ifp.Validation.WPF](https://github.com/ifpanalytics/Ifp.Validation.WPF)
 
 ## How to use
 
+The first step in the use of the library is to have an  *object to validate*:
+
+```CS
+public class RegisterNewUserModel
+{
+    public string EMail { get; set; }
+    public string GivenName { get; set; }
+    public string SurName { get; set; }
+    public DateTime? BithDate { get; set; }
+}
+```     
+
+Then one ore more validation rules are defined:
+
+```CS
+public class BirthdateValidationRule : ValidationRule<RegisterNewUserModel>
+{
+    public override ValidationOutcome ValidateObject(RegisterNewUserModel objectToValidate)
+    {
+        // Use the ToFailure extension method for strings to create a ValidationOutcome.
+        if (objectToValidate.BithDate == null)
+            return "You did not enter a birth date. You will not be able to use some of our services.You can add this information later.".ToFailure(FailureSeverity.Information);
+        // Return ValidationOutcome.Success to indicate success.
+        return ValidationOutcome.Success;
+    }
+}
+
+public class PasswordValidationRule : ValidationRule<RegisterNewUserModel>
+{
+    // Import other services per constructor injection if needed
+    public PasswordValidationRule(IPasswordPolicyVerifier passwordPolicyVerifier)
+    {
+        PasswordPolicyVerifier=passwordPolicyVerifier;
+    }
+
+    protected IPasswordPolicyVerifier PasswordPolicyVerifier { get; }
+
+    public override ValidationOutcome ValidateObject(RegisterNewUserModel objectToValidate)
+    {
+        if (objectToValidate.Password != objectToValidate.PasswordRepeated)
+            return "The two passwords you entered are not the same.".ToFailure(FailureSeverity.Error);
+        if (!PasswordPolicyVerifier.ConformsToPolicy(objectToValidate.Password))
+            return "The password you entered does not conform to the password policy.".ToFailure(FailureSeverity.Error);
+        if (PasswordPolicyVerifier.IsWeakPassword(objectToValidate.Password))
+            return "The password you entered is valid but weak. Do you want to use it anyway?".ToFailure(FailureSeverity.Warning);
+        return ValidationOutcome.Success;
+    }
+}
+```
+
+The rules can be combined to a set of validations:
+
+```CS
+public class RegisterNewUserValidator : RuleBasedValidator<RegisterNewUserModel>
+{
+    public RegisterNewUserValidator(PasswordValidationRule passwordValidationRule, BirthdateValidationRule birthdateValidationRule)
+        : base(passwordValidationRule, birthdateValidationRule)
+    {
+
+    }
+}
+```
+
+This validator can be used to produce a `ValidationSummary` and this summary can be presented to the user.
+
+```CS
+public class RegisterNewUserService: IRegisterNewUserService
+{
+    public RegisterNewUserService(RegisterNewUserValidator validator, IValidationSummaryPresentationService validationSummaryPresentationService)
+    {
+        Validator = validator;
+        ValidationSummaryPresentationService = validationSummaryPresentationService;
+    }
+
+    protected IValidationSummaryPresentationService ValidationSummaryPresentationService { get; }
+    protected RegisterNewUserValidator Validator { get; }
+
+    public bool ValidateAndStoreNewUser(RegisterNewUserModel model)
+    {
+        var summary = Validator.Validate(model);
+        if (ValidationSummaryPresentationService.ShowValidationSummary(summary))
+            // There was no error or the user pressed 'OK'.
+            return false;
+        // Logic to store the model to the database.
+        return true;
+    }
+}
+```
+
 ## How to get
-dd
