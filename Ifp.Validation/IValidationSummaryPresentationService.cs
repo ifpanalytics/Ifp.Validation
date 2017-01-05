@@ -56,7 +56,7 @@ namespace Ifp.Validation
         /// <param name="validationSummary">The <see cref="ValidationSummary"/> to present. A <see cref="ValidationSummary"/> is usually created by a <see cref="Validator{T}"/>.</param>
         /// <param name="showOnlyOnFailures">
         ///     if <c>false</c> the dialog will be shown in any case. 
-        ///     If <c>true</c> the dialog will be shown in case of a <see cref="ValidationSummary.Severity"/> has a severity with <see cref="ValidationSeverity.IsAnError"/> set to true.
+        ///     If <c>true</c> the dialog will be shown in case of a <see cref="ValidationSummary.Severity"/> has <see cref="ValidationSeverity.IsAnError"/> set to <c>true</c>.
         ///     This is the case by all severities except <see cref="ValidationSeverity.Success"/>.
         /// </param>
         /// <returns>Returns <c>true</c> if the user want's to proceed or if there were no errors.</returns>
