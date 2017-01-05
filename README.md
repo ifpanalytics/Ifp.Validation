@@ -152,7 +152,7 @@ public class RegisterNewUserService: IRegisterNewUserService
     {
         var summary = Validator.Validate(model);
         if (ValidationSummaryPresentationService.ShowValidationSummary(summary))
-            // There was no error or the user pressed 'OK'.
+            // The user pressed 'Cancel'.
             return false;
         // Logic to store the model to the database.
         return true;
