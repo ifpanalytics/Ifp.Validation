@@ -27,4 +27,10 @@ namespace Ifp.Validation.TestProxy.Tests.Documentation
             return ValidationOutcome.Success;
         }
     }
+
+    // The validation rules expects a string to validate 
+    class EMailAddressValidationRule : ValidationRule<string>
+    {
+        public override ValidationOutcome ValidateObject(string objectToValidate) => ValidationOutcome.Success;
+    }
 }

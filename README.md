@@ -5,6 +5,14 @@ rules and encapsulating the validation result in an easily presentable form:
 
 ![ValidationSummaryPresenterExample](Documentation/Media/ValidationSummaryPresenterExample.png)
 
+The library mimics the behavior of an compiler output:
+
+* Don't stop at the first error, but process and collect all errors.
+* Distinguish between *Information*, *Warning* and *Errors* severities and take the most severe error to decide about the overall outcome of a validation:
+  * **Information** (circled blue 'i') Just a hint. The validation is still successful.
+  * **Warning** (yellow exclamation mark) There might be a problem. Let the user decide whether this is serve or not.
+  * **Error** (red 'x') There is an error and the validation failed. 
+
 ## Design goals
 
 The library was created with the following design goals:
@@ -81,9 +89,31 @@ public class RegisterNewUserModel
     public string SurName { get; set; }
     public DateTime? BithDate { get; set; }
 }
-```     
+```
 
-Then one ore more validation rules are defined:
+In its simplest form the validation can be performed like this:
+
+```CS
+bool IsRegisterNewUserModelValid(RegisterNewUserModel model)
+{
+    // Use the ValidationSummaryBuilder to build a ValidationSummary step by step.
+    ValidationSummaryBuilder vsBuilder = new ValidationSummaryBuilder();
+    // Validate the object and append as much ValidationOutcomes as you like.
+    if (String.IsNullOrWhiteSpace(model.EMail))
+        vsBuilder.Append("You must enter an email address".ToFailure(FailureSeverity.Error));
+    if (model.BithDate == null)
+        vsBuilder.Append("You did not enter a birth date. You will not be able to use some of our services.You can add this information later.".ToFailure(FailureSeverity.Information));
+    // Build the summary and use an IValidationSummaryPresentationService to present the summary to the user.
+    var summary = vsBuilder.ToSummary();
+    var presenter = new ValidationSummaryPresentationService();
+    // If the user clicks on 'OK' the ShowValidationSummary method returns true.
+    var userResponse = presenter.ShowValidationSummary(summary);
+    return userResponse;
+}
+```
+
+To take full advantage of the library, the concerns (defining the rules, performing the validation, presenting the result) should be separated.
+To do so one ore more validation rules are defined first:
 
 ```CS
 public class BirthdateValidationRule : ValidationRule<RegisterNewUserModel>
@@ -134,7 +164,8 @@ public class RegisterNewUserValidator : RuleBasedValidator<RegisterNewUserModel>
 }
 ```
 
-This validator can be used to produce a `ValidationSummary` and this summary can be presented to the user.
+This validator can be used to produce a `ValidationSummary` and this summary can be presented to the user
+(see the screen shot above for an example).
 
 ```CS
 public class RegisterNewUserService: IRegisterNewUserService
@@ -151,7 +182,7 @@ public class RegisterNewUserService: IRegisterNewUserService
     public bool ValidateAndStoreNewUser(RegisterNewUserModel model)
     {
         var summary = Validator.Validate(model);
-        if (ValidationSummaryPresentationService.ShowValidationSummary(summary))
+        if (!ValidationSummaryPresentationService.ShowValidationSummary(summary))
             // The user pressed 'Cancel'.
             return false;
         // Logic to store the model to the database.
@@ -170,6 +201,82 @@ This cumbersome work is best delegated to a dependency injection framework like 
 
 ## Understanding `ValidationOutcome`
 
+The `ValidationOutcome` can be constructed either by 
+* Calling  the `ToFailure` extension method for `string`.
+* Accessing the `ValidationOutcome.Success` property.
+
+The `ToFailure` method takes a `FailureSeverity` enum as parameter. This enum
+represents the three predefined severities (information, warning and error).
+
+To create a new severity (e.g. Question) `ValidationOutcome` must be used as a base class. 
+
 ## Reusing `ValidationRule`
+
+The `RuleBasedValidator<T>` can be used to combine several rules. There are several mechanism available
+to combine rules even if the type parameter `<T>` of `IValidationRule<T>` is not the same as `RuleBasedValidator<T>`.
+
+### [Contravariant](https://msdn.microsoft.com/en-us/library/dd799517.aspx) rules
+
+A `RuleBasedValidator<T>` accepts a `ValidationRule<T>` if the type parameter of the 
+validation rule is a super-class of the type parameter of the `RuleBasedValidator<T>`:
+
+```CS
+public class AnimalMustBeMaleRule : ValidationRule<Animal> { ... }
+
+// The 'Dog' validator accepts rules for 'Animals'.
+var validator = new RuleBasedValidator<Dog>(new AnimalMustBeMaleRule());
+```
+
+### Converting the type using `ValidationRuleDelegate<T>`
+
+The `ValidationRuleDelegate<T>` class can be used to convert an object to validate
+in the appropriate type for a validation rule. If there is for instance a validation rule, that
+can decide whether a string is a valid email address or not, this rule can be used by a `RuleBasedValidator<T>`
+in the following manner:
+
+```CS
+// The validation rules expects a string to validate
+class EMailAddressValidationRule : ValidationRule<string>
+
+// The validator expects a RegisterNewUserModel.
+class ValidationRuleDelegateExample : RuleBasedValidator<RegisterNewUserModel>
+{
+    
+    public ValidationRuleDelegateExample(EMailAddressValidationRule emailAddressValidationRule) :
+        base(new ValidationRuleDelegate<RegisterNewUserModel>(model => emailAddressValidationRule.ValidateObject(model.EMail)))
+        {
+
+        }
+}
+
+```
+
+### Applying `ValidationRule<T>` to an `IEnumerable<T>` of objects
+
+```CS
+// Some rules
+class DogMustBeOlderThan2Years: ValidationRule<Dog> { ... }
+class DogMustBeMale : ValidationRule<Dog> { ... }
+
+// A validator for a single 'dog'
+class DogValidator : RuleBasedValidator<Dog>
+{
+    public DogValidator(DogMustBeOlderThan2Years rule1, DogMustBeMale rule2) :
+        base(rule1, rule2)
+    {
+    }
+}
+
+// A CollectionValidator that can validate an IEnumerable<Dog> objects
+class DogCollectionValidator: CollectionValidator<Dog>
+{
+    public DogCollectionValidator(DogValidator dogValidator) : 
+        base(dogValidator)
+    {
+    }
+}
+
+
+```
 
 ## How to get

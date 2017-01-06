@@ -7,8 +7,6 @@ namespace Ifp.Validation
 {
     /// <summary>
     /// Takes one or more validation rules for <typeparamref name="T"/> and validates <see cref="IEnumerable{T}"/> against that rules.
-    /// The validator can be configured to either apply all rules to an object first and than go to the next object or to perform the first rule to
-    /// all objects and proceed with the next rule by setting the <see cref="OutterLoopOverRulesInnerLoopOverObjects"/> property.
     /// </summary>
     /// <typeparam name="T">The type of the object to validate.</typeparam>
     public class CollectionValidator<T>
@@ -16,62 +14,57 @@ namespace Ifp.Validation
         /// <summary>
         /// Constructs a <see cref="CollectionValidator{T}"/> and takes an enumeration of <see cref="IValidationRule{T}"/>.
         /// </summary>
-        /// <param name="validationRules">The </param>
+        /// <param name="validationRules">The <see cref="IEnumerable{T}"/> of <see cref="IValidationRule{T}"/> objects.</param>
         public CollectionValidator(IEnumerable<IValidationRule<T>> validationRules) : this(validationRules.ToArray())
         {
 
         }
+
         /// <summary>
-        /// 
+        /// Constructor for the <see cref="CollectionValidator{T}"/> that takes a variable number of <see cref="IValidationRule{T}"/> objects. 
         /// </summary>
-        /// <param name="validationRules"></param>
+        /// <param name="validationRules">A variable number of <see cref="IValidationRule{T}"/> objects.</param>
         public CollectionValidator(params IValidationRule<T>[] validationRules)
         {
-            ValidationRules = validationRules;
+            Validator = new RuleBasedValidator<T>(validationRules);
         }
 
         /// <summary>
-        /// TODO
+        /// A <see cref="Validator{T}"/> that is applicable to an instance of <typeparamref name="T"/>. This validator is applied to all objects in the <see cref="IEnumerable{T}"/> in the <see cref="CollectionValidator{T}.ValidateCollection(IEnumerable{T})"/> method.
         /// </summary>
-        protected IValidationRule<T>[] ValidationRules { get; }
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public bool OutterLoopOverRulesInnerLoopOverObjects { get; set; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name="collectionToValidate"></param>
-        /// <returns></returns>
-        public IEnumerable<ValidationOutcome> ValidateCollection(IEnumerable<T> collectionToValidate) =>
-            OutterLoopOverRulesInnerLoopOverObjects ?
-            ValidateCollectionRulesFirst(collectionToValidate) :
-            ValidateCollectionObjectsFirst(collectionToValidate);
-
-        private IEnumerable<ValidationOutcome> ValidateCollectionRulesFirst(IEnumerable<T> collectionToValidate)
+        /// <param name="validator"></param>
+        public CollectionValidator(Validator<T> validator)
         {
-            foreach (var rule in ValidationRules)
-            {
-                foreach (var objectToValidate in collectionToValidate)
-                {
-                    var result = rule.ValidateObject(objectToValidate);
-                    yield return result;
-                    if (rule.CausesValidationProcessToStop && result.Severity.IsAnError) yield break;
-                }
-            }
+            Validator = validator;
         }
 
-        private IEnumerable<ValidationOutcome> ValidateCollectionObjectsFirst(IEnumerable<T> collectionToValidate)
+        /// <summary>
+        /// The <see cref="Validator{T}"/> that represents the rules given in the constructor.
+        /// </summary>
+        protected Validator<T> Validator { get; }
+
+        /// <summary>
+        /// Validates a <see cref="IEnumerable{T}"/> of <typeparamref name="T"/> objects.
+        /// </summary>
+        /// <param name="collectionToValidate">The <see cref="IEnumerable{T}"/> of <typeparamref name="T"/> objects.</param>
+        /// <returns>A <see cref="ValidationSummary"/> representing the summary of the results of the application of all <see cref="IValidationRule{T}">Validation rules</see> to all objects in <paramref name="collectionToValidate"/>.</returns>
+        public ValidationSummary ValidateCollection(IEnumerable<T> collectionToValidate) =>
+            new ValidationSummary(ValidateCollectionLoop(collectionToValidate));
+
+        /// <summary>
+        /// Apply all rules, represented by <see cref="CollectionValidator{T}.Validator"/> to the <paramref name="collectionToValidate"/>. Override
+        /// this method to change the order of application of the rules.
+        /// </summary>
+        /// <param name="collectionToValidate">The <see cref="IEnumerable{T}"/> of objects to validate.</param>
+        /// <returns>
+        /// A <see cref="IEnumerable{T}"/> of <see cref="ValidationSummary"/> objects, where each <see cref="ValidationSummary"/> represents
+        /// the result of the validation of a object of the <paramref name="collectionToValidate"/>.
+        /// </returns>
+        protected virtual IEnumerable<ValidationSummary> ValidateCollectionLoop(IEnumerable<T> collectionToValidate)
         {
             foreach (var objectToValidate in collectionToValidate)
             {
-                foreach (var rule in ValidationRules)
-                {
-                    var result = rule.ValidateObject(objectToValidate);
-                    yield return result;
-                    if (rule.CausesValidationProcessToStop && result.Severity.IsAnError) break;
-                }
+                yield return Validator.Validate(objectToValidate);
             }
         }
     }

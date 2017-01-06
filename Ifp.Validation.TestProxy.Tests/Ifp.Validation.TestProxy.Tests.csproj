@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="CollectionValidatorTests.cs" />
     <Compile Include="Documentation\BirthdateValidationRule.cs" />
+    <Compile Include="Documentation\CollectionValidatorExample.cs" />
     <Compile Include="Documentation\RegisterNewUserService.cs" />
     <Compile Include="Documentation\EMailValidationRule.cs" />
     <Compile Include="Documentation\IPasswordPolicyVerifier.cs" />
@@ -63,6 +64,8 @@
     <Compile Include="Documentation\PasswordValidationRule.cs" />
     <Compile Include="Documentation\RegisterNewUserModel.cs" />
     <Compile Include="Documentation\RegisterNewUserValidator.cs" />
+    <Compile Include="Documentation\SimpleValidation.cs" />
+    <Compile Include="Documentation\ValidationRuleDelegateExample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RuleBasedValidatorTests.cs" />
     <Compile Include="SupportClasses\AnimalRules.cs" />
@@ -71,7 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ifp.Validation.TestProxy\Ifp.Validation.TestProxy.csproj">
-      <Project>{867258A7-9517-4D2C-ACD0-0D8F379D3B30}</Project>
+      <Project>{867258a7-9517-4d2c-acd0-0d8f379d3b30}</Project>
       <Name>Ifp.Validation.TestProxy</Name>
     </ProjectReference>
   </ItemGroup>

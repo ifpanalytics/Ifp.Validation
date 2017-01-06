@@ -16,7 +16,7 @@ namespace Ifp.Validation.Tests
         public void CovarianceTest()
         {
             // just needs to compile to show that an animal rule (super class) is compatible to an dog (sub class) rule.
-            var validator = new RuleBasedValidator<Dog>(new AnimalShouldNotBiteRule());
+            var validator = new RuleBasedValidator<Dog>(new AnimalMustBeMaleRule());
         }
 
 
