@@ -81,7 +81,7 @@ The library was created with the following design goals:
 The following parts are not included in the library:
 
 * No predefined validation rules, like *mandatory field*, *email address*, *Max length* and alike.
-* No presentation logic. A WPF library with an [`IValidationSummaryPresentationService`](https://github.com/ifpanalytics/Ifp.Validation/wiki/969daa1b-1461-94ea-de5b-490b353158fe) can
+* No presentation logic. A WPF library with an [`IValidationSummaryPresentationService`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_IValidationSummaryPresentationService) can
   be found at [github.com/ifpanalytics/Ifp.Validation.WPF](https://github.com/ifpanalytics/Ifp.Validation.WPF)
 
 ## How to use
