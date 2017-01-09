@@ -2,7 +2,7 @@
   "copyright": "2017",
   "title": "Ifp.Validation",
   "description": "Library for defining validation rules, combine them to sets of rules and test objects against that rules.",
-  "version": "1.0.0-*",
+  "version": "1.1.0-*",
   "authors": [ "Martin Strecker" ],
   "name": "Ifp.Validation",
   "packOptions": {
@@ -10,13 +10,14 @@
     "owners": [ "Martin Strecker" ],
     "summary": "Ifp.Validation validates an object against an set of validation rules.",
     "licenseUrl": "https://opensource.org/licenses/MIT",
-    "tags": [ "validation", "valid", "input", "dependency injection", "testable", "extensible" ],
+    "tags": [ "validation", "valid", "input", "dependency injection", "testable", "extensible", "rules", "rules engine" ],
     "iconUrl": "https://cdn1.iconfinder.com/data/icons/material-core/20/check-circle-outline-32.png",
     "projectUrl": "https://github.com/ifpanalytics/Ifp.Validation",
     "repository": {
       "type": "git",
       "url": "https://github.com/ifpanalytics/Ifp.Validation"
-    }
+    },
+    "releaseNotes": "New in version 1.1: Added CollectionValidator<T>"
   },
   "buildOptions": {
     "warningsAsErrors": true,
