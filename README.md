@@ -349,7 +349,17 @@ var summary = identityValidator.Validate(null);
 
 ## Further documentation
 
+The full library documentation can be found in the 
+[Wiki](https://github.com/ifpanalytics/Ifp.Validation/wiki).
 
-[Wiki](https://github.com/ifpanalytics/Ifp.Validation/wiki)
 
 ## How to get
+
+The library can be installed via Nuget [nuget.org/packages/Ifp.Validation](https://www.nuget.org/packages/Ifp.Validation/)
+
+```CS
+PS> Install-Package Ifp.Validation 
+```
+
+For an [`IValidationSummaryPresentationService`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_IValidationSummaryPresentationService)
+for WPF look at the [github.com/ifpanalytics/Ifp.Validation.WPF](https://github.com/ifpanalytics/Ifp.Validation.WPF) package.
