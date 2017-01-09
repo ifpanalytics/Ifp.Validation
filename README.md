@@ -69,12 +69,19 @@ The library was created with the following design goals:
     <dd>
         All validation steps can be used as entry points for own implementations and extensions.        
     </dd>
+    <dt>Portable</dt>
+    <dd>
+        This library does not contain any presentation logic and can therefore used on a wide variety of platforms.
+        A companion library for displaying a validation summary can be found at <a href="https://github.com/ifpanalytics/Ifp.Validation.WPF">github.com/ifpanalytics/Ifp.Validation.WPF</a>.  
+    </dd>
 </dl>
+
+
 
 The following parts are not included in the library:
 
 * No predefined validation rules, like *mandatory field*, *email address*, *Max length* and alike.
-* No presentation logic. A WPF library with an `IValidationSummaryPresentationService` can
+* No presentation logic. A WPF library with an [`IValidationSummaryPresentationService`](wiki/969daa1b-1461-94ea-de5b-490b353158fe) can
   be found at [github.com/ifpanalytics/Ifp.Validation.WPF](https://github.com/ifpanalytics/Ifp.Validation.WPF)
 
 ## How to use
@@ -229,7 +236,7 @@ var validator = new RuleBasedValidator<Dog>(new AnimalMustBeMaleRule());
 
 ### Converting the type using `ValidationRuleDelegate<T>`
 
-The `ValidationRuleDelegate<T>` class can be used to convert an object to validate
+The `ValidationRuleDelegate<T>` class can be used to convert an *object to validate*
 in the appropriate type for a validation rule. If there is for instance a validation rule, that
 can decide whether a string is a valid email address or not, this rule can be used by a `RuleBasedValidator<T>`
 in the following manner:
@@ -253,6 +260,11 @@ class ValidationRuleDelegateExample : RuleBasedValidator<RegisterNewUserModel>
 
 ### Applying `ValidationRule<T>` to an `IEnumerable<T>` of objects
 
+The `CollectionValidator<T>` allows to wrap an existing `RuleBasedValidator<T>` 
+to support the validation of an `IEnumerable<T>`. In the example below a `DogCollectionValidator`
+is constructed by either taking the validator for a single dog or by taking rules
+for a single dog.
+
 ```CS
 // Some rules
 class DogMustBeOlderThan2Years: ValidationRule<Dog> { ... }
@@ -267,16 +279,33 @@ class DogValidator : RuleBasedValidator<Dog>
     }
 }
 
-// A CollectionValidator that can validate an IEnumerable<Dog> objects
-class DogCollectionValidator: CollectionValidator<Dog>
+// A CollectionValidator that can validate an IEnumerable<Dog>
+class DogCollectionValidator : CollectionValidator<Dog>
 {
+    // Wrap an existing RuleBasedValidator 
     public DogCollectionValidator(DogValidator dogValidator) : 
         base(dogValidator)
     {
     }
+        
+    // Or construct a CollectionValidator out of rules 
+    public DogCollectionValidator(DogMustBeOlderThan2Years rule1, DogMustBeMale rule2) :
+        base(rule1, rule2)
+    {
+    }
 }
 
-
+// Use the validator
+var dogs = new Dog[] { new Dog(), new Dog() };
+var summary = validator.ValidateCollection(dogs);
 ```
+
+## The `CausesValidationProcessToStop` property
+
+
+
+## Further documentation
+
+[Wiki](https://github.com/ifpanalytics/Ifp.Validation/wiki)
 
 ## How to get
