@@ -107,7 +107,7 @@ bool IsRegisterNewUserModelValid(RegisterNewUserModel model)
     ValidationSummaryBuilder vsBuilder = new ValidationSummaryBuilder();
     // Validate the object and append as much ValidationOutcomes as you like.
     if (String.IsNullOrWhiteSpace(model.EMail))
-        vsBuilder.Append("You must enter an email address".ToFailure(FailureSeverity.Error));
+        vsBuilder.Append("You must enter an email address.".ToFailure(FailureSeverity.Error));
     if (model.BithDate == null)
         vsBuilder.Append("You did not enter a birth date. You will not be able to use some of our services.You can add this information later.".ToFailure(FailureSeverity.Information));
     // Build the summary and use an IValidationSummaryPresentationService to present the summary to the user.
@@ -120,7 +120,7 @@ bool IsRegisterNewUserModelValid(RegisterNewUserModel model)
 ```
 
 To take full advantage of the library, the concerns (defining the rules, performing the validation, presenting the result) should be separated.
-To do so one ore more validation rules are defined first:
+To do so one ore more [validation rules](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_ValidationRule_1) are defined first:
 
 ```CS
 public class BirthdateValidationRule : ValidationRule<RegisterNewUserModel>
@@ -158,7 +158,7 @@ public class PasswordValidationRule : ValidationRule<RegisterNewUserModel>
 }
 ```
 
-The rules can be combined to a set of validations:
+The rules can be combined to a [set of validations](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_RuleBasedValidator_1):
 
 ```CS
 public class RegisterNewUserValidator : RuleBasedValidator<RegisterNewUserModel>
@@ -171,7 +171,7 @@ public class RegisterNewUserValidator : RuleBasedValidator<RegisterNewUserModel>
 }
 ```
 
-This validator can be used to produce a `ValidationSummary` and this summary can be presented to the user
+This validator can be used to produce a [`ValidationSummary`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_ValidationSummary) and this summary can be presented to the user
 (see the screen shot above for an example).
 
 ```CS
@@ -206,20 +206,22 @@ new RegisterNewUserService(new RegisterNewUserValidator(new PasswordValidationRu
 
 This cumbersome work is best delegated to a dependency injection framework like [Ninject](http://www.ninject.org/) or [Unity](https://github.com/unitycontainer/unity).
 
-## Understanding `ValidationOutcome`
+## Understanding [`ValidationOutcome`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_ValidationOutcome)
 
-The `ValidationOutcome` can be constructed either by 
-* Calling  the `ToFailure` extension method for `string`.
-* Accessing the `ValidationOutcome.Success` property.
+The [`ValidationOutcome`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_ValidationOutcome) can be constructed either by 
+* Calling  the [`ToFailure`](https://github.com/ifpanalytics/Ifp.Validation/wiki/M_Ifp_Validation_ValidationSummaryBuilderExtensions_ToFailure) extension method for `string`.
+* Accessing the [`ValidationOutcome.Success`](https://github.com/ifpanalytics/Ifp.Validation/wiki/P_Ifp_Validation_ValidationOutcome_Success) property.
 
-The `ToFailure` method takes a `FailureSeverity` enum as parameter. This enum
+The [`ToFailure`](https://github.com/ifpanalytics/Ifp.Validation/wiki/M_Ifp_Validation_ValidationSummaryBuilderExtensions_ToFailure) method takes a 
+[`FailureSeverity`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_FailureSeverity) enum as parameter. This enum
 represents the three predefined severities (information, warning and error).
 
-To create a new severity (e.g. Question) `ValidationOutcome` must be used as a base class. 
+To create a new severity (e.g. question) [`ValidationSeverity`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_ValidationSeverity) must be used as a base class. 
 
-## Reusing `ValidationRule`
+## Reusing [`ValidationRule`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_ValidationRule_1)
 
-The `RuleBasedValidator<T>` can be used to combine several rules. There are several mechanism available
+The [`RuleBasedValidator<T>`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_RuleBasedValidator_1) can be used to 
+combine an arbitrary number of rules. There are several mechanism available
 to combine rules even if the type parameter `<T>` of `IValidationRule<T>` is not the same as `RuleBasedValidator<T>`.
 
 ### [Contravariant](https://msdn.microsoft.com/en-us/library/dd799517.aspx) rules
@@ -234,11 +236,11 @@ public class AnimalMustBeMaleRule : ValidationRule<Animal> { ... }
 var validator = new RuleBasedValidator<Dog>(new AnimalMustBeMaleRule());
 ```
 
-### Converting the type using `ValidationRuleDelegate<T>`
+### Converting the type using [`ValidationRuleDelegate<T>`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_ValidationRuleDelegate_1)
 
 The `ValidationRuleDelegate<T>` class can be used to convert an *object to validate*
 in the appropriate type for a validation rule. If there is for instance a validation rule, that
-can decide whether a string is a valid email address or not, this rule can be used by a `RuleBasedValidator<T>`
+can decide whether a string is a valid email address or not, this rule can be used by a `RuleBasedValidator<RegisterNewUserModel>`
 in the following manner:
 
 ```CS
@@ -260,10 +262,10 @@ class ValidationRuleDelegateExample : RuleBasedValidator<RegisterNewUserModel>
 
 ### Applying `ValidationRule<T>` to an `IEnumerable<T>` of objects
 
-The `CollectionValidator<T>` allows to wrap an existing `RuleBasedValidator<T>` 
-to support the validation of an `IEnumerable<T>`. In the example below a `DogCollectionValidator`
-is constructed by either taking the validator for a single dog or by taking rules
-for a single dog.
+The [`CollectionValidator<T>`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_CollectionValidator_1) 
+allows to wrap an existing `RuleBasedValidator<T>` to support the validation of an `IEnumerable<T>`. 
+In the example below a `DogCollectionValidator` is constructed by either taking the validator for a single dog or by 
+taking rules for a single dog.
 
 ```CS
 // Some rules
@@ -300,11 +302,53 @@ var dogs = new Dog[] { new Dog(), new Dog() };
 var summary = validator.ValidateCollection(dogs);
 ```
 
-## The `CausesValidationProcessToStop` property
+## The [`CausesValidationProcessToStop`](https://github.com/ifpanalytics/Ifp.Validation/wiki/P_Ifp_Validation_IValidationRule_1_CausesValidationProcessToStop) property
 
+Every [`IValidationRule<T>`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_IValidationRule_1) has a property
+[`CausesValidationProcessToStop`](https://github.com/ifpanalytics/Ifp.Validation/wiki/P_Ifp_Validation_IValidationRule_1_CausesValidationProcessToStop). This property can be used to 
+instruct the [`RuleBasedValidator<T>`](https://github.com/ifpanalytics/Ifp.Validation/wiki/T_Ifp_Validation_RuleBasedValidator_1) to stop with the validation in case of an error.
+This can be used to avoid the messaging of consequential errors:
+
+```CS
+// A validation rule to report an error if the object to validate is null.
+class ArgumentCantBeNullRule<T> : ValidationRule<T> where T : class
+{
+    public override ValidationOutcome ValidateObject(T objectToValidate)
+    {
+        if (objectToValidate == null)
+            return "The argument must be specified.".ToFailure(FailureSeverity.Error);
+        return ValidationOutcome.Success;
+    }
+    public override bool CausesValidationProcessToStop => true;
+}
+
+class UserMustBeAuthenticated : ValidationRule<IIdentity>
+{
+    public override ValidationOutcome ValidateObject(IIdentity objectToValidate)
+    {
+        // This might cause a NullReferenceExcpetion
+        if (!objectToValidate.IsAuthenticated)
+            return "User must be authenticated.".ToFailure(FailureSeverity.Error);
+        return ValidationOutcome.Success;
+    }
+}
+
+class IdentityValidator : RuleBasedValidator<IIdentity>
+{
+    public IdentityValidator(ArgumentCantBeNullRule<IIdentity> rule1, UserMustBeAuthenticated rule2) :
+        base(rule1, rule2)
+    {
+    }
+}
+
+var identityValidator = new IdentityValidator(new ArgumentCantBeNullRule<IIdentity>(), new UserMustBeAuthenticated());
+// Because the first rule returns an error, the second rule will not be processed.
+var summary = identityValidator.Validate(null);
+```
 
 
 ## Further documentation
+
 
 [Wiki](https://github.com/ifpanalytics/Ifp.Validation/wiki)
 

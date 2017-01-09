@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="CollectionValidatorTests.cs" />
     <Compile Include="Documentation\BirthdateValidationRule.cs" />
+    <Compile Include="Documentation\CausesValidationToStopExample.cs" />
     <Compile Include="Documentation\CollectionValidatorExample.cs" />
     <Compile Include="Documentation\RegisterNewUserService.cs" />
     <Compile Include="Documentation\EMailValidationRule.cs" />
