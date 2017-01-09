@@ -24,6 +24,7 @@ namespace Ifp.Validation.TestProxy.Tests.Documentation
     {
         public override ValidationOutcome ValidateObject(IIdentity objectToValidate)
         {
+            // This might cause a NullReferenceException
             if (!objectToValidate.IsAuthenticated)
                 return "User must be authenticated.".ToFailure(FailureSeverity.Error);
             return ValidationOutcome.Success;

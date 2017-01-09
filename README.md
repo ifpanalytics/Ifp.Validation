@@ -326,7 +326,7 @@ class UserMustBeAuthenticated : ValidationRule<IIdentity>
 {
     public override ValidationOutcome ValidateObject(IIdentity objectToValidate)
     {
-        // This might cause a NullReferenceExcpetion
+        // This might cause a NullReferenceException
         if (!objectToValidate.IsAuthenticated)
             return "User must be authenticated.".ToFailure(FailureSeverity.Error);
         return ValidationOutcome.Success;
