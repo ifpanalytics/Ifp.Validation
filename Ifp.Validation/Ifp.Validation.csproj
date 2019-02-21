@@ -4,7 +4,7 @@
     <Description>Library for defining validation rules, combine them to sets of rules and test objects against that rules.</Description>
     <Copyright>2017</Copyright>
     <AssemblyTitle>Ifp.Validation</AssemblyTitle>
-    <VersionPrefix>1.2.0</VersionPrefix>
+    <VersionPrefix>1.3.0</VersionPrefix>
     <Authors>Martin Strecker</Authors>
     <TargetFrameworks>netstandard1.0;net46;net45;net40;net35</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -12,10 +12,10 @@
     <AssemblyName>Ifp.Validation</AssemblyName>
     <PackageId>Ifp.Validation</PackageId>
     <PackageTags>validation;valid;input;dependency injection;testable;extensible;rules;rules engine</PackageTags>
-    <PackageReleaseNotes>New in version 1.1: Added CollectionValidator&lt;T&gt;</PackageReleaseNotes>
+    <PackageReleaseNotes>New in version 1.2: Added IValidator&lt;T&gt;</PackageReleaseNotes>
     <PackageIconUrl>https://cdn1.iconfinder.com/data/icons/material-core/20/check-circle-outline-32.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/ifpanalytics/Ifp.Validation</PackageProjectUrl>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/ifpanalytics/Ifp.Validation</RepositoryUrl>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
