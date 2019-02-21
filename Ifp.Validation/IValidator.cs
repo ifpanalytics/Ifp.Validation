@@ -5,7 +5,7 @@
     /// of <see cref="ValidationOutcome"/> wrapped in a <see cref="ValidationSummary"/>.
     /// </summary>
     /// <typeparam name="T">The type of the object to validate.</typeparam>
-    public interface IValidator<T>
+    public interface IValidator<in T>
     {
         /// <summary>
         /// Validate an object and return the <see cref="ValidationOutcome"/> objects wrapped in a <see cref="ValidationOutcome"/>.
