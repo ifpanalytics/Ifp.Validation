@@ -11,13 +11,13 @@ namespace Ifp.Validation
     /// isolated validation and the <see cref="Validator{T}"/> collects the single <see cref="ValidationOutcome"/> and wrap them in a <see cref="ValidationSummary"/>.
     /// </summary>
     /// <typeparam name="T">The type of the object to validate.</typeparam>
-    public abstract class Validator<T>
+    public abstract class Validator<T>: IValidator<T>
     {
         /// <summary>
-        /// Validate a object and return the <see cref="ValidationOutcome"/> objects wrapped in a <see cref="ValidationOutcome"/>.
+        /// Validate an object and return the <see cref="ValidationOutcome"/> objects wrapped in a <see cref="ValidationOutcome"/>.
         /// </summary>
         /// <param name="objectToValidate">The object to validate.</param>
-        /// <returns>The <see cref="ValidationSummary"/> that wraps a several <see cref="ValidationOutcome"/>.#
+        /// <returns>The <see cref="ValidationSummary"/> that wraps a several <see cref="ValidationOutcome"/>.
         /// The <see cref="ValidationSummary"/> can be used as a model that can be presented to the user.
         /// </returns>
         public abstract ValidationSummary Validate(T objectToValidate);
