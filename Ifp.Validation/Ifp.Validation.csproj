@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Library for defining validation rules, combine them to sets of rules and test objects against that rules.</Description>
+    <Copyright>2017</Copyright>
+    <AssemblyTitle>Ifp.Validation</AssemblyTitle>
+    <VersionPrefix>1.2.0</VersionPrefix>
+    <Authors>Martin Strecker</Authors>
+    <TargetFrameworks>netstandard1.0;net46;net45;net40;net35</TargetFrameworks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Ifp.Validation</AssemblyName>
+    <PackageId>Ifp.Validation</PackageId>
+    <PackageTags>validation;valid;input;dependency injection;testable;extensible;rules;rules engine</PackageTags>
+    <PackageReleaseNotes>New in version 1.1: Added CollectionValidator&lt;T&gt;</PackageReleaseNotes>
+    <PackageIconUrl>https://cdn1.iconfinder.com/data/icons/material-core/20/check-circle-outline-32.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/ifpanalytics/Ifp.Validation</PackageProjectUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/ifpanalytics/Ifp.Validation</RepositoryUrl>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
+    <Reference Include="System" />
+  </ItemGroup>
+
+</Project>
