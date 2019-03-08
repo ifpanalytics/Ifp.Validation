@@ -34,7 +34,7 @@ namespace Ifp.Validation
     /// The base class for implementing the validation logic. <see cref="ValidateObject(T)"/> must be implemented with the validation logic.
     /// </summary>
     /// <typeparam name="T">The type of the object to validate.</typeparam>
-    public abstract class ValidationRule<T> : IValidationRule<T>
+    public abstract class ValidationRule<T> : IValidationRule<T>, IValidator<T>
     {
         /// <summary>
         /// Checks the <paramref name="objectToValidate"/> and returns a <see cref="ValidationOutcome"/>. 
@@ -71,6 +71,9 @@ namespace Ifp.Validation
         /// </code> 
         /// </example>
         public abstract ValidationOutcome ValidateObject(T objectToValidate);
+
+        ValidationSummary IValidator<T>.Validate(T objectToValidate)
+            => new ValidationSummary(ValidateObject(objectToValidate));
 
         /// <summary>
         /// Returns always false. Override this property and return true if
