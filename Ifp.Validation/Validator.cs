@@ -136,20 +136,6 @@ namespace Ifp.Validation
         /// </summary>
         /// <param name="selector">A <paramref name="selector"/> that takes an object of type <typeparamref name="T"/> and returns a collection of 
         /// type <typeparamref name="U"/>.</param>
-        /// <param name="rules">The <see cref="IValidationRule{T}"/>s to apply to <typeparamref name="U"/>.</param>
-        public SubCollectionValidator(Func<T, IEnumerable<U>> selector, params IValidationRule<U>[] rules)
-        {
-            Selector = selector;
-            Validator = new RuleBasedValidator<U>(rules);
-        }
-
-        /// <summary>
-        /// Constructs a <see cref="SubCollectionValidator{T, U}"/> by taking a <paramref name="selector"/> the returns a 
-        /// collection from an object of type <typeparamref name="T"/> and some <see cref="IValidationRule{T}"/>s for the underlying type
-        /// of the collection.
-        /// </summary>
-        /// <param name="selector">A <paramref name="selector"/> that takes an object of type <typeparamref name="T"/> and returns a collection of 
-        /// type <typeparamref name="U"/>.</param>
         /// <param name="validators">The <see cref="IValidator{T}"/>s to apply to <typeparamref name="U"/>.</param>
         public SubCollectionValidator(Func<T, IEnumerable<U>> selector, params IValidator<U>[] validators)
         {
@@ -173,10 +159,6 @@ namespace Ifp.Validation
         /// <param name="objectToValidate"></param>
         /// <returns></returns>
         public override ValidationSummary Validate(T objectToValidate)
-        {
-            var collection = Selector(objectToValidate);
-            var summaries = collection.Select(Validator.Validate);
-            return new ValidationSummary(summaries);
-        }
+            => new ValidationSummary(Selector(objectToValidate).Select(Validator.Validate));
     }
 }
