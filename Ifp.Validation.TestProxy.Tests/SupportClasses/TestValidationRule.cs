@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ifp.Validation.TestProxy.Tests.SupportClasses
 {
-    class TestValidationRule : ValidationRule<Animal>
+    class TestValidationRule<T> : ValidationRule<T>
     {
         bool _CausesValidationProcessToStop = false;
         public TestValidationRule(ValidationOutcome outcome) : this(outcome, null)
@@ -27,10 +23,46 @@ namespace Ifp.Validation.TestProxy.Tests.SupportClasses
         public ValidationOutcome Outcome { get; }
         public Action OnValidateObjectCalled { get; }
 
-        public override ValidationOutcome ValidateObject(Animal objectToValidate)
+        public override ValidationOutcome ValidateObject(T objectToValidate)
         {
             OnValidateObjectCalled?.Invoke();
             return Outcome;
+        }
+    }
+
+    class AnimalTestValidationRule : TestValidationRule<Animal>
+    {
+        public AnimalTestValidationRule(ValidationOutcome outcome)
+            : base(outcome)
+        {
+        }
+
+        public AnimalTestValidationRule(ValidationOutcome outcome, Action onValidateObjectCalled)
+            : base(outcome, onValidateObjectCalled)
+        {
+        }
+
+        public AnimalTestValidationRule(ValidationOutcome outcome, Action onValidateObjectCalled, bool causesValidationProcessToStop)
+            : base(outcome, onValidateObjectCalled, causesValidationProcessToStop)
+        {
+        }
+    }
+
+    class ZooTestValidationRule : TestValidationRule<Zoo>
+    {
+        public ZooTestValidationRule(ValidationOutcome outcome)
+            : base(outcome)
+        {
+        }
+
+        public ZooTestValidationRule(ValidationOutcome outcome, Action onValidateObjectCalled)
+            : base(outcome, onValidateObjectCalled)
+        {
+        }
+
+        public ZooTestValidationRule(ValidationOutcome outcome, Action onValidateObjectCalled, bool causesValidationProcessToStop)
+            : base(outcome, onValidateObjectCalled, causesValidationProcessToStop)
+        {
         }
     }
 }
