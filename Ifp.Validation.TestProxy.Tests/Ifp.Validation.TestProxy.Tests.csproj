@@ -72,6 +72,7 @@
     <Compile Include="SupportClasses\AnimalRules.cs" />
     <Compile Include="SupportClasses\Animals.cs" />
     <Compile Include="SupportClasses\TestValidationRule.cs" />
+    <Compile Include="ValidatorCombinerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ifp.Validation.TestProxy\Ifp.Validation.TestProxy.csproj">
