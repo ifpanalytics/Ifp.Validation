@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Ifp.Validation
 {
@@ -11,7 +9,7 @@ namespace Ifp.Validation
     /// isolated validation and the <see cref="Validator{T}"/> collects the single <see cref="ValidationOutcome"/> and wrap them in a <see cref="ValidationSummary"/>.
     /// </summary>
     /// <typeparam name="T">The type of the object to validate.</typeparam>
-    public abstract class Validator<T>: IValidator<T>
+    public abstract class Validator<T> : IValidator<T>
     {
         /// <summary>
         /// Validate an object and return the <see cref="ValidationOutcome"/> objects wrapped in a <see cref="ValidationOutcome"/>.
@@ -64,7 +62,9 @@ namespace Ifp.Validation
                 var ruleResult = rule.ValidateObject(objectToValidate);
                 yield return ruleResult;
                 if (ruleResult.Severity.IsAnError && rule.CausesValidationProcessToStop)
+                {
                     yield break;
+                }
             }
         }
 
@@ -74,5 +74,48 @@ namespace Ifp.Validation
         /// <param name="objectToValidate">The object to validate.</param>
         /// <returns>A <see cref="ValidationSummary"/> that contains the <see cref="ValidationOutcome"/> of every applied <see cref="IValidationRule{T}"/>.</returns>
         public override ValidationSummary Validate(T objectToValidate) => new ValidationSummary(ProcessValidations(objectToValidate));
+    }
+
+    /// <summary>
+    /// An <see cref="IValidator{T}"/> which combines the <see cref="ValidationSummary"/> of other <see cref="IValidator{T}"/>s.
+    /// </summary>
+    /// <typeparam name="T">The type of the object to validate</typeparam>
+    public class ValidatorCombiner<T> : Validator<T>, IValidator<T>
+    {
+        /// <summary>
+        /// Constructs an <see cref="IValidator{T}"/> that combines the <see cref="ValidationSummary"/> of the <paramref name="validators"/> in the given order.
+        /// </summary>
+        /// <param name="validators">The <see cref="IValidator{T}"/>s to combine.</param>
+        public ValidatorCombiner(IEnumerable<IValidator<T>> validators) : this(validators.ToArray())
+        {
+
+        }
+
+        /// <summary>
+        /// Constructs an <see cref="IValidator{T}"/> that combines the <see cref="ValidationSummary"/> of the <paramref name="validators"/> in the given order.
+        /// </summary>
+        /// <param name="validators">The <see cref="IValidator{T}"/>s to combine.</param>
+        public ValidatorCombiner(params IValidator<T>[] validators)
+        {
+            Validators = validators;
+        }
+
+        /// <summary>
+        /// The collection of validators that get combined.
+        /// </summary>
+        protected IValidator<T>[] Validators { get; }
+
+        /// <summary>
+        /// Validates <paramref name="objectToValidate"/> by calling <see cref="IValidator{T}.Validate(T)"/> of all <see cref="ValidatorCombiner{T}.Validators"/> and combining
+        /// their <see cref="ValidationSummary"/>.
+        /// </summary>
+        /// <param name="objectToValidate">The object to validate.</param>
+        /// <returns></returns>
+        public override ValidationSummary Validate(T objectToValidate)
+        {
+            var validationSummaries = Validators.Select(v => v.Validate(objectToValidate));
+            return new ValidationSummary(validationSummaries);
+
+        }
     }
 }
