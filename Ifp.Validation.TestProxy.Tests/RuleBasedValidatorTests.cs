@@ -23,13 +23,13 @@ namespace Ifp.Validation.Tests
         [TestMethod()]
         public void ValidationSummaryIsOrderedBySeverityAsNumber()
         {
-            var r0 = new TestValidationRule(new ValidationOutcomeSuccess());
-            var r1 = new TestValidationRule(new ValidationOutcomeError(nameof(ValidationOutcomeError)));
-            var r2 = new TestValidationRule(new ValidationOutcomeError(nameof(ValidationOutcomeError)));
-            var r3 = new TestValidationRule(new ValidationOutcomeWarning(nameof(ValidationOutcomeWarning)));
-            var r4 = new TestValidationRule(new ValidationOutcomeInformation(nameof(ValidationOutcomeInformation)));
-            var r5 = new TestValidationRule(new ValidationOutcomeWarning(nameof(ValidationOutcomeWarning)));
-            var r6 = new TestValidationRule(new ValidationOutcomeSuccess());
+            var r0 = new AnimalTestValidationRule(new ValidationOutcomeSuccess());
+            var r1 = new AnimalTestValidationRule(new ValidationOutcomeError(nameof(ValidationOutcomeError)));
+            var r2 = new AnimalTestValidationRule(new ValidationOutcomeError(nameof(ValidationOutcomeError)));
+            var r3 = new AnimalTestValidationRule(new ValidationOutcomeWarning(nameof(ValidationOutcomeWarning)));
+            var r4 = new AnimalTestValidationRule(new ValidationOutcomeInformation(nameof(ValidationOutcomeInformation)));
+            var r5 = new AnimalTestValidationRule(new ValidationOutcomeWarning(nameof(ValidationOutcomeWarning)));
+            var r6 = new AnimalTestValidationRule(new ValidationOutcomeSuccess());
             var validator = new RuleBasedValidator<Animal>(r0, r1, r2, r3, r4, r5, r6);
             var result = validator.Validate(null);
             Assert.AreSame(r1.Outcome, result.ValidationOutcomes.ElementAt(0));
@@ -46,13 +46,13 @@ namespace Ifp.Validation.Tests
         {
             int callCounter = 0;
             Action<int> assert = expectedCallCounter => { Assert.AreEqual(expectedCallCounter, callCounter); callCounter++; };
-            var r0 = new TestValidationRule(new ValidationOutcomeSuccess(), () => assert(0));
-            var r1 = new TestValidationRule(new ValidationOutcomeError(nameof(ValidationOutcomeError)), () => assert(1));
-            var r2 = new TestValidationRule(new ValidationOutcomeError(nameof(ValidationOutcomeError)), () => assert(2));
-            var r3 = new TestValidationRule(new ValidationOutcomeWarning(nameof(ValidationOutcomeWarning)), () => assert(3));
-            var r4 = new TestValidationRule(new ValidationOutcomeInformation(nameof(ValidationOutcomeInformation)), () => assert(4));
-            var r5 = new TestValidationRule(new ValidationOutcomeWarning(nameof(ValidationOutcomeWarning)), () => assert(5));
-            var r6 = new TestValidationRule(new ValidationOutcomeSuccess(), () => assert(6));
+            var r0 = new AnimalTestValidationRule(new ValidationOutcomeSuccess(), () => assert(0));
+            var r1 = new AnimalTestValidationRule(new ValidationOutcomeError(nameof(ValidationOutcomeError)), () => assert(1));
+            var r2 = new AnimalTestValidationRule(new ValidationOutcomeError(nameof(ValidationOutcomeError)), () => assert(2));
+            var r3 = new AnimalTestValidationRule(new ValidationOutcomeWarning(nameof(ValidationOutcomeWarning)), () => assert(3));
+            var r4 = new AnimalTestValidationRule(new ValidationOutcomeInformation(nameof(ValidationOutcomeInformation)), () => assert(4));
+            var r5 = new AnimalTestValidationRule(new ValidationOutcomeWarning(nameof(ValidationOutcomeWarning)), () => assert(5));
+            var r6 = new AnimalTestValidationRule(new ValidationOutcomeSuccess(), () => assert(6));
             var validator = new RuleBasedValidator<Animal>(r0, r1, r2, r3, r4, r5, r6);
             var result = validator.Validate(null);
             Assert.AreEqual(7, callCounter);
@@ -63,11 +63,11 @@ namespace Ifp.Validation.Tests
         {
             int callCounter = 0;
             Action<int> assert = expectedCallCounter => { Assert.AreEqual(expectedCallCounter, callCounter); callCounter++; };
-            var r0 = new TestValidationRule(new ValidationOutcomeSuccess(), () => assert(0));
-            var r1 = new TestValidationRule(new ValidationOutcomeError(nameof(ValidationOutcomeError)), () => assert(1));
-            var r2 = new TestValidationRule(new ValidationOutcomeError(nameof(ValidationOutcomeError)), () => assert(2));
-            var r3 = new TestValidationRule(new ValidationOutcomeWarning(nameof(ValidationOutcomeWarning)), () => assert(3), true);
-            var r4 = new TestValidationRule(new ValidationOutcomeInformation(nameof(ValidationOutcomeInformation)), () => Assert.Fail("Should not be called"));
+            var r0 = new AnimalTestValidationRule(new ValidationOutcomeSuccess(), () => assert(0));
+            var r1 = new AnimalTestValidationRule(new ValidationOutcomeError(nameof(ValidationOutcomeError)), () => assert(1));
+            var r2 = new AnimalTestValidationRule(new ValidationOutcomeError(nameof(ValidationOutcomeError)), () => assert(2));
+            var r3 = new AnimalTestValidationRule(new ValidationOutcomeWarning(nameof(ValidationOutcomeWarning)), () => assert(3), true);
+            var r4 = new AnimalTestValidationRule(new ValidationOutcomeInformation(nameof(ValidationOutcomeInformation)), () => Assert.Fail("Should not be called"));
             var validator = new RuleBasedValidator<Animal>(r0, r1, r2, r3, r4);
             var result = validator.Validate(null);
             Assert.AreEqual(4, callCounter);

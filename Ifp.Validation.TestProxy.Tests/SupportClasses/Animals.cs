@@ -14,4 +14,14 @@ namespace Ifp.Validation.TestProxy.Tests.SupportClasses
     {
 
     }
+
+    public class Zoo
+    {
+        public Zoo(params Animal[] animals)
+        {
+            Animals = animals;
+        }
+
+        public IEnumerable<Animal> Animals { get; }
+    }
 }
