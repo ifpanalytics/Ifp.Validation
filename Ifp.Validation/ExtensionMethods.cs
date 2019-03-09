@@ -36,8 +36,8 @@
         /// Converts a <see cref="IValidationRule{T}"/> into an <see cref="IValidator{T}"/>.
         /// </summary>
         /// <typeparam name="T">The type of the object to validate.</typeparam>
-        /// <param name="rule">The rule that get's converted into a <see cref="IValidator{T}"/>.</param>
-        /// <returns></returns>
+        /// <param name="rule">The rule that get's converted into an <see cref="IValidator{T}"/>.</param>
+        /// <returns>An <see cref="IValidator{T}"/> that calls the <paramref name="rule"/> on <see cref="IValidator{T}.Validate(T)"/>.</returns>
         public static IValidator<T> ToValidator<T>(this IValidationRule<T> rule)
             => new RuleBasedValidator<T>(rule);
     }
