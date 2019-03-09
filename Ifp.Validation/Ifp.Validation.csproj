@@ -15,7 +15,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
     <PackageTags>validation;valid;input;dependency injection;testable;extensible;rules;rules engine</PackageTags>
-    <PackageReleaseNotes>New in version 1.2: Added IValidator&lt;T&gt;</PackageReleaseNotes>
+    <PackageReleaseNotes>New in version 1.4: Added ValidatorCombiner&lt;T&gt; and SubCollectionValidator&lt;T, U&gt;</PackageReleaseNotes>
     <PackageIconUrl>https://cdn1.iconfinder.com/data/icons/material-core/20/check-circle-outline-32.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/ifpanalytics/Ifp.Validation</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -28,6 +28,7 @@
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <Version>1.4.0</Version>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
