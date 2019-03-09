@@ -75,9 +75,9 @@
     <Compile Include="ValidatorCombinerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ifp.Validation.TestProxy\Ifp.Validation.TestProxy.csproj">
-      <Project>{867258a7-9517-4d2c-acd0-0d8f379d3b30}</Project>
-      <Name>Ifp.Validation.TestProxy</Name>
+    <ProjectReference Include="..\Ifp.Validation\Ifp.Validation.csproj">
+      <Project>{6a10958b-fe52-45be-9651-14b9419d2d20}</Project>
+      <Name>Ifp.Validation</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
