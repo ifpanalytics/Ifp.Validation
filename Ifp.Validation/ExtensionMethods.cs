@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Ifp.Validation
+﻿namespace Ifp.Validation
 {
     /// <summary>
     /// Extension methods for the Ifp.Validation library

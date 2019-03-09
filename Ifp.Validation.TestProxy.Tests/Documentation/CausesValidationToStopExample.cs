@@ -1,11 +1,7 @@
-﻿using Ifp.Validation.TestProxy.Tests.SupportClasses;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ifp.Validation.TestProxy.Tests.Documentation
 {
@@ -14,7 +10,10 @@ namespace Ifp.Validation.TestProxy.Tests.Documentation
         public override ValidationOutcome ValidateObject(T objectToValidate)
         {
             if (objectToValidate == null)
+            {
                 return "The argument must be specified.".ToFailure(FailureSeverity.Error);
+            }
+
             return ValidationOutcome.Success;
         }
         public override bool CausesValidationProcessToStop => true;
@@ -26,7 +25,10 @@ namespace Ifp.Validation.TestProxy.Tests.Documentation
         {
             // This might cause a NullReferenceException
             if (!objectToValidate.IsAuthenticated)
+            {
                 return "User must be authenticated.".ToFailure(FailureSeverity.Error);
+            }
+
             return ValidationOutcome.Success;
         }
     }
