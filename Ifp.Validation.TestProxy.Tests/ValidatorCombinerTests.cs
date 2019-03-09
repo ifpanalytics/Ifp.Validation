@@ -20,10 +20,10 @@ namespace Ifp.Validation.TestProxy.Tests
             var collectionValidator = new SubCollectionValidator<Zoo, Animal>(z => z.Animals, new AnimalTestValidationRule(ValidationOutcome.Success, () => callHistory.Add(1)).ToValidator());
             var simpleRule = new ZooTestValidationRule(ValidationOutcome.Success, () => callHistory.Add(2));
             var combined = new ValidatorCombiner<Zoo>(ruleBasedValidator, collectionValidator, simpleRule.ToValidator());
-            var result = combined.Validate(new Zoo(new Dog()));
+            var result = combined.Validate(new Zoo(new Dog(), new Dog()));
             result.Severity.Should().Be(ValidationOutcome.Success.Severity);
-            callHistory.Should().HaveCount(3);
-            callHistory.Should().Equal(0, 1, 2);
+            callHistory.Should().HaveCount(4);
+            callHistory.Should().Equal(0, 1, 1, 2);
         }
     }
 }

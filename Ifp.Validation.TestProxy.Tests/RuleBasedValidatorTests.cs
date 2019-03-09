@@ -26,14 +26,7 @@ namespace Ifp.Validation.TestProxy.Tests
             var r6 = new AnimalTestValidationRule(new ValidationOutcomeSuccess());
             var validator = new RuleBasedValidator<Animal>(r0, r1, r2, r3, r4, r5, r6);
             var result = validator.Validate(null);
-            result.ValidationOutcomes.Should().Equal(
-                r1.Outcome,
-                r2.Outcome,
-                r3.Outcome,
-                r5.Outcome,
-                r4.Outcome,
-                r0.Outcome,
-                r6.Outcome);
+            result.ValidationOutcomes.Should().Equal(r1.Outcome, r2.Outcome, r3.Outcome, r5.Outcome, r4.Outcome, r0.Outcome, r6.Outcome);
         }
 
         [Fact]

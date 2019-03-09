@@ -113,11 +113,7 @@ namespace Ifp.Validation
         /// <param name="objectToValidate">The object to validate.</param>
         /// <returns></returns>
         public override ValidationSummary Validate(T objectToValidate)
-        {
-            var validationSummaries = Validators.Select(v => v.Validate(objectToValidate));
-            return new ValidationSummary(validationSummaries);
-
-        }
+            => new ValidationSummary(Validators.Select(v => v.Validate(objectToValidate)));
     }
 
     /// <summary>
