@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Ifp.Validation
+﻿namespace Ifp.Validation
 {
     /// <summary>
     /// Interface for services that can show a <see cref="ValidationSummary"/> as a dialog to the user. This library does not include an implementation of such a service.

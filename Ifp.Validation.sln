@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ifp.Validation", "Ifp.Validation\Ifp.Validation.csproj", "{6A10958B-FE52-45BE-9651-14B9419D2D20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ifp.Validation.TestProxy", "Ifp.Validation.TestProxy\Ifp.Validation.TestProxy.csproj", "{867258A7-9517-4D2C-ACD0-0D8F379D3B30}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ifp.Validation.TestProxy.Tests", "Ifp.Validation.TestProxy.Tests\Ifp.Validation.TestProxy.Tests.csproj", "{2AF005B2-1989-498D-8DA7-64DFC3117847}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{6A10958B-FE52-45BE-9651-14B9419D2D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A10958B-FE52-45BE-9651-14B9419D2D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A10958B-FE52-45BE-9651-14B9419D2D20}.Release|Any CPU.Build.0 = Release|Any CPU
-		{867258A7-9517-4D2C-ACD0-0D8F379D3B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{867258A7-9517-4D2C-ACD0-0D8F379D3B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{867258A7-9517-4D2C-ACD0-0D8F379D3B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{867258A7-9517-4D2C-ACD0-0D8F379D3B30}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2AF005B2-1989-498D-8DA7-64DFC3117847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2AF005B2-1989-498D-8DA7-64DFC3117847}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AF005B2-1989-498D-8DA7-64DFC3117847}.Release|Any CPU.ActiveCfg = Release|Any CPU

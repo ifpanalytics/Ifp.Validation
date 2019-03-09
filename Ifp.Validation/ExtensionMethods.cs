@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Ifp.Validation
+﻿namespace Ifp.Validation
 {
     /// <summary>
     /// Extension methods for the Ifp.Validation library
@@ -35,5 +31,14 @@ namespace Ifp.Validation
         /// <param name="severity">The <see cref="FailureSeverity"/> that is used to construct one of the predefined <see cref="ValidationOutcome"/>.</param>
         /// <returns>Returns a <see cref="ValidationOutcome"/> that corresponds to the <paramref name="severity"/>.</returns>
         public static ValidationOutcome ToFailure(this string message, FailureSeverity severity) => ValidationOutcome.Failure(severity, message);
+
+        /// <summary>
+        /// Converts a <see cref="IValidationRule{T}"/> into an <see cref="IValidator{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to validate.</typeparam>
+        /// <param name="rule">The rule that get's converted into an <see cref="IValidator{T}"/>.</param>
+        /// <returns>An <see cref="IValidator{T}"/> that calls the <paramref name="rule"/> on <see cref="IValidator{T}.Validate(T)"/>.</returns>
+        public static IValidator<T> ToValidator<T>(this IValidationRule<T> rule)
+            => new RuleBasedValidator<T>(rule);
     }
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ifp.Validation.TestProxy.Tests.Documentation
 {
@@ -14,9 +10,14 @@ namespace Ifp.Validation.TestProxy.Tests.Documentation
             ValidationSummaryBuilder vsBuilder = new ValidationSummaryBuilder();
             // Validate the object and append as much ValidationOutcomes as you like.
             if (String.IsNullOrWhiteSpace(model.EMail))
+            {
                 vsBuilder.Append("You must enter an email address".ToFailure(FailureSeverity.Error));
+            }
+
             if (model.BithDate == null)
+            {
                 vsBuilder.Append("You did not enter a birth date.You will not be able to use some of our services.You can add this information later.".ToFailure(FailureSeverity.Information));
+            }
             // Build the summary and use an IValidationSummaryPresentationService to present the summary to the user.
             var summary = vsBuilder.ToSummary();
             var presenter = new ValidationSummaryPresentationService();

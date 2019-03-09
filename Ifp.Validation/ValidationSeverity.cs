@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Ifp.Validation
 {
@@ -132,12 +129,12 @@ namespace Ifp.Validation
             /// Returns <c>false</c>. The user should only be informed. To allow cancellation use <see cref="WarningSeverity"/> instead.
             /// </summary>
             public override bool AllowsCancel => false;
-            
+
             /// <summary>
             /// Returns <c>false</c>. Information allows continuation of the process.
             /// </summary>
             public override bool CausesCancel => false;
-            
+
             /// <summary>
             /// Returns <c>10</c>. 
             /// </summary>
@@ -155,7 +152,7 @@ namespace Ifp.Validation
             /// Returns <c>true</c> to enable cancellation.
             /// </summary>
             public override bool AllowsCancel => true;
-            
+
             /// <summary>
             /// Returns <c>false</c> to allow continuation of the process.
             /// </summary>

@@ -1,9 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Ifp.Validation.TestProxy.Tests.Documentation
 {
@@ -12,7 +7,7 @@ namespace Ifp.Validation.TestProxy.Tests.Documentation
         bool ValidateAndStoreNewUser(RegisterNewUserModel model);
     }
 
-    public class RegisterNewUserService: IRegisterNewUserService
+    public class RegisterNewUserService : IRegisterNewUserService
     {
         public RegisterNewUserService(RegisterNewUserValidator validator, IValidationSummaryPresentationService validationSummaryPresentationService)
         {
@@ -27,8 +22,10 @@ namespace Ifp.Validation.TestProxy.Tests.Documentation
         {
             var summary = Validator.Validate(model);
             if (ValidationSummaryPresentationService.ShowValidationSummary(summary))
+            {
                 // The user pressed 'Cancel'.
                 return false;
+            }
             // Logic to store the model to the database.
             return true;
         }
