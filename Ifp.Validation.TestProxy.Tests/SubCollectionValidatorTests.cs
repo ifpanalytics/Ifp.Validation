@@ -8,7 +8,7 @@ namespace Ifp.Validation.TestProxy.Tests
     public class SubCollectionValidatorTests
     {
         [Fact]
-        public void T()
+        public void AllItemsOfACollectionAreporcessedInTheRightOrder()
         {
             var callHistory = new List<int>();
             var r0 = new AnimalTestValidationRule(ValidationOutcome.Success, () => callHistory.Add(0));
