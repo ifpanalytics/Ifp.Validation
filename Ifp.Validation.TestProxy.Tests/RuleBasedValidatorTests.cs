@@ -2,7 +2,7 @@
 using Ifp.Validation.TestProxy.Tests.SupportClasses;
 using Xunit;
 
-namespace Ifp.Validation.Tests
+namespace Ifp.Validation.TestProxy.Tests
 {
     public class RuleBasedValidatorTests
     {
