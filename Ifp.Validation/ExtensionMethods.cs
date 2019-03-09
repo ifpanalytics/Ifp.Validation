@@ -31,5 +31,14 @@
         /// <param name="severity">The <see cref="FailureSeverity"/> that is used to construct one of the predefined <see cref="ValidationOutcome"/>.</param>
         /// <returns>Returns a <see cref="ValidationOutcome"/> that corresponds to the <paramref name="severity"/>.</returns>
         public static ValidationOutcome ToFailure(this string message, FailureSeverity severity) => ValidationOutcome.Failure(severity, message);
+
+        /// <summary>
+        /// Converts a <see cref="IValidationRule{T}"/> into an <see cref="IValidator{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to validate.</typeparam>
+        /// <param name="rule">The rule that get's converted into a <see cref="IValidator{T}"/>.</param>
+        /// <returns></returns>
+        public static IValidator<T> ToValidator<T>(this IValidationRule<T> rule)
+            => new RuleBasedValidator<T>(rule);
     }
 }

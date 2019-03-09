@@ -17,9 +17,9 @@ namespace Ifp.Validation.TestProxy.Tests
                 callHistory.Add(0);
                 return ValidationOutcome.Success;
             }));
-            var collectionValidator = new SubCollectionValidator<Zoo, Animal>(z => z.Animals, new AnimalTestValidationRule(ValidationOutcome.Success, () => callHistory.Add(1)));
+            var collectionValidator = new SubCollectionValidator<Zoo, Animal>(z => z.Animals, new AnimalTestValidationRule(ValidationOutcome.Success, () => callHistory.Add(1)).ToValidator());
             var simpleRule = new ZooTestValidationRule(ValidationOutcome.Success, () => callHistory.Add(2));
-            var combined = new ValidatorCombiner<Zoo>(ruleBasedValidator, collectionValidator, simpleRule);
+            var combined = new ValidatorCombiner<Zoo>(ruleBasedValidator, collectionValidator, simpleRule.ToValidator());
             var result = combined.Validate(new Zoo(new Dog()));
             result.Severity.Should().Be(ValidationOutcome.Success.Severity);
             callHistory.Should().HaveCount(3);
