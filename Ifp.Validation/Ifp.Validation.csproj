@@ -14,6 +14,7 @@
     <Title>Ifp.Validation</Title>
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageTags>validation;valid;input;dependency injection;testable;extensible;rules;rules engine</PackageTags>
     <PackageReleaseNotes>New in version 1.4: Added ValidatorCombiner&lt;T&gt; and SubCollectionValidator&lt;T, U&gt;</PackageReleaseNotes>
     <PackageIconUrl>https://cdn1.iconfinder.com/data/icons/material-core/20/check-circle-outline-32.png</PackageIconUrl>
@@ -22,6 +23,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/ifpanalytics/Ifp.Validation</RepositoryUrl>
     <Version>1.4.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
