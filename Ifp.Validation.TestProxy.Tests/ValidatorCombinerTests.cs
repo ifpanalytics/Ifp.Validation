@@ -1,5 +1,7 @@
 ﻿using Ifp.Validation.TestProxy.Tests.SupportClasses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ifp.Validation.TestProxy.Tests
 {
@@ -9,21 +11,19 @@ namespace Ifp.Validation.TestProxy.Tests
         [TestMethod()]
         public void CombineRuleBasedValidationAndCollectionValidation()
         {
-            var zoo = new Zoo();
-            var r1WasCalled = false; var r2WasCalled = false; var r3WasCalled = false;
+            var callHistory = new List<int>();
             var ruleBasedValidator = new RuleBasedValidator<Zoo>(new ValidationRuleDelegate<Zoo>(_ =>
             {
-                r1WasCalled = true;
+                callHistory.Add(0);
                 return ValidationOutcome.Success;
             }));
-            var collectionValidator = new SubCollectionValidator<Zoo, Animal>(z => z.Animals, new AnimalTestValidationRule(ValidationOutcome.Success, () => r2WasCalled = true));
-            var simpleRule = new ZooTestValidationRule(ValidationOutcome.Success, () => r3WasCalled = true);
+            var collectionValidator = new SubCollectionValidator<Zoo, Animal>(z => z.Animals, new AnimalTestValidationRule(ValidationOutcome.Success, () => callHistory.Add(1)));
+            var simpleRule = new ZooTestValidationRule(ValidationOutcome.Success, () => callHistory.Add(2));
             var combined = new ValidatorCombiner<Zoo>(ruleBasedValidator, collectionValidator, simpleRule);
             var result = combined.Validate(new Zoo(new Dog()));
             Assert.AreEqual(result.Severity, ValidationOutcome.Success.Severity);
-            Assert.AreEqual(r1WasCalled, true);
-            Assert.AreEqual(r2WasCalled, true);
-            Assert.AreEqual(r3WasCalled, true);
+            Assert.AreEqual(callHistory.Count, 3);
+            Assert.IsTrue(callHistory.Select((item, index) => item == index).All(t => t));
         }
     }
 }
