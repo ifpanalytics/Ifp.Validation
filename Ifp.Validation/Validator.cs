@@ -157,4 +157,45 @@ namespace Ifp.Validation
         public override ValidationSummary Validate(T objectToValidate)
             => new ValidationSummary(Selector(objectToValidate).Select(Validator.Validate));
     }
+
+    /// <summary>
+    /// A validator, that delegates validation to another validator. This can be useful if the objectToValidate needs to be transformed before validation.
+    /// </summary>
+    /// <typeparam name="T">The type to which the validation is delegated.</typeparam>
+    /// <typeparam name="U">The type that this validator can validate.</typeparam>
+    public class DelegateValidator<T, U> : IValidator<U>
+    {
+        /// <summary>
+        /// Creates a <see cref="DelegateValidator{T, U}"/> that takes an <see cref="IValidator{T}"/> and a <paramref name="selector"/> from <typeparamref name="U"/>
+        /// to <typeparamref name="T"/>. The <see cref="DelegateValidator{T, U}"/> implements <see cref="IValidator{U}"/>.
+        /// </summary>
+        /// <param name="validator">An existing <see cref="IValidator{T}"/> for <typeparamref name="T"/>.</param>
+        /// <param name="selector">An <paramref name="selector"/> from <typeparamref name="U"/> to <typeparamref name="T"/>.</param>
+        public DelegateValidator(IValidator<T> validator, Func<U, T> selector)
+        {
+            Validator = validator;
+            Selector = selector;
+        }
+
+        /// <summary>
+        /// The validator to which the validation is delegated
+        /// </summary>
+        protected IValidator<T> Validator { get; }
+        
+        /// <summary>
+        /// The <see cref="Selector"/> function that transforms objectToValidate from <typeparamref name="U"/> to <typeparamref name="T"/>.
+        /// </summary>
+        protected Func<U, T> Selector { get; }
+        
+        /// <summary>
+        /// Validates an <paramref name="objectToValidate"/> of type <typeparamref name="U"/> by transforming it to <typeparamref name="T"/> and delegating 
+        /// validation to <see cref="Validator"/>.
+        /// </summary>
+        /// <param name="objectToValidate">The object to validate.</param>
+        /// <returns>A <see cref="ValidationSummary"/> representing the result of a validation.</returns>
+        public ValidationSummary Validate(U objectToValidate)
+        {
+            return Validator.Validate(Selector(objectToValidate));
+        }
+    }
 }
