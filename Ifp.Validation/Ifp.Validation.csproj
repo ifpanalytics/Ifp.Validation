@@ -16,7 +16,7 @@
     <IncludeSource>true</IncludeSource>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageTags>validation;valid;input;dependency injection;testable;extensible;rules;rules engine</PackageTags>
-    <PackageReleaseNotes>New in version 1.5: Added Async support</PackageReleaseNotes>
+    <PackageReleaseNotes>New in version 1.6: Added Async support</PackageReleaseNotes>
     <PackageIconUrl>https://cdn1.iconfinder.com/data/icons/material-core/20/check-circle-outline-32.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/ifpanalytics/Ifp.Validation</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
